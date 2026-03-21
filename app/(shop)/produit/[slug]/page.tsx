@@ -5,6 +5,10 @@ import { Separator } from "@/components/ui/separator"
 import { getProductBySlug } from "@/lib/queries/products"
 import { AddToCartButton } from "./add-to-cart-button"
 import Link from "next/link"
+import { generateProductJsonLd } from "@/lib/seo"
+import { db } from "@/lib/db"
+import { product as productTable } from "@/lib/schema"
+import { eq } from "drizzle-orm"
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -19,6 +23,14 @@ export async function generateMetadata({ params }: Props) {
     title: `${product.name} | KDOBOX`,
     description: product.shortDescription || product.description?.slice(0, 160),
   }
+}
+
+export async function generateStaticParams() {
+  const products = await db.query.product.findMany({
+    where: eq(productTable.isActive, true),
+    columns: { slug: true },
+  })
+  return products.map((p) => ({ slug: p.slug }))
 }
 
 export default async function ProductPage({ params }: Props) {
@@ -50,8 +62,24 @@ export default async function ProductPage({ params }: Props) {
         product.reviews.length
       : null
 
+  const jsonLd = generateProductJsonLd({
+    name: product.name,
+    slug: product.slug,
+    description: product.description,
+    price: product.price,
+    image: mainImage?.url,
+    sku: product.sku,
+    stock: product.stock,
+    rating: avgRating,
+    reviewCount: product.reviews?.length,
+  })
+
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="grid gap-8 md:grid-cols-2">
         {/* Images */}
         <div className="space-y-3">

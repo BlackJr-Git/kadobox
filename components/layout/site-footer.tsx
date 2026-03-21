@@ -4,7 +4,7 @@ export function SiteFooter() {
   return (
     <footer className="border-t bg-muted/40">
       <div className="mx-auto max-w-7xl px-4 py-12">
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
           <div>
             <Link href="/" className="text-lg font-bold tracking-tight">
               <span className="text-primary">KDOB</span>OX
@@ -15,15 +15,47 @@ export function SiteFooter() {
           </div>
 
           <div>
+            <h4 className="mb-3 text-sm font-semibold">Boutique</h4>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>
+                <Link href="/produits" className="hover:text-foreground">
+                  Tous les produits
+                </Link>
+              </li>
+              <li>
+                <Link href="/coffrets" className="hover:text-foreground">
+                  Coffrets
+                </Link>
+              </li>
+              <li>
+                <Link href="/cartes-cadeaux" className="hover:text-foreground">
+                  Cartes cadeaux
+                </Link>
+              </li>
+              <li>
+                <Link href="/recommandation" className="hover:text-foreground">
+                  Quiz cadeau
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
             <h4 className="mb-3 text-sm font-semibold">Occasions</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <Link href="/occasion/anniversaire" className="hover:text-foreground">
+                <Link
+                  href="/occasion/anniversaire"
+                  className="hover:text-foreground"
+                >
                   Anniversaire
                 </Link>
               </li>
               <li>
-                <Link href="/occasion/mariage" className="hover:text-foreground">
+                <Link
+                  href="/occasion/mariage"
+                  className="hover:text-foreground"
+                >
                   Mariage
                 </Link>
               </li>
@@ -33,8 +65,19 @@ export function SiteFooter() {
                 </Link>
               </li>
               <li>
-                <Link href="/occasion/saint-valentin" className="hover:text-foreground">
+                <Link
+                  href="/occasion/saint-valentin"
+                  className="hover:text-foreground"
+                >
                   Saint-Valentin
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/occasion/fete-des-meres"
+                  className="hover:text-foreground"
+                >
+                  Fête des mères
                 </Link>
               </li>
             </ul>

@@ -2,10 +2,25 @@ import { notFound } from "next/navigation"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ProductGrid } from "@/components/product/product-grid"
-import { getOccasionBySlug, getProductsByOccasion, getOccasions } from "@/lib/queries/occasions"
+import {
+  getOccasionBySlug,
+  getProductsByOccasion,
+  getOccasions,
+} from "@/lib/queries/occasions"
+import { db } from "@/lib/db"
+import { occasion as occasionTable } from "@/lib/schema"
+import { eq } from "drizzle-orm"
 
 type Props = {
   params: Promise<{ slug: string }>
+}
+
+export async function generateStaticParams() {
+  const occasions = await db.query.occasion.findMany({
+    where: eq(occasionTable.isActive, true),
+    columns: { slug: true },
+  })
+  return occasions.map((o) => ({ slug: o.slug }))
 }
 
 export async function generateMetadata({ params }: Props) {
@@ -38,9 +53,7 @@ export default async function OccasionPage({ params }: Props) {
       <section
         className="border-b py-12"
         style={{
-          backgroundColor: occasion.color
-            ? `${occasion.color}10`
-            : undefined,
+          backgroundColor: occasion.color ? `${occasion.color}10` : undefined,
         }}
       >
         <div className="mx-auto max-w-7xl px-4">

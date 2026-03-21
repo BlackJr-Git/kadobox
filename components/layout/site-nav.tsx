@@ -26,6 +26,12 @@ export function SiteNav() {
 
           <nav className="hidden items-center gap-5 text-sm md:flex">
             <Link
+              href="/produits"
+              className="text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Produits
+            </Link>
+            <Link
               href="/occasion/anniversaire"
               className="text-muted-foreground transition-colors hover:text-foreground"
             >
@@ -42,6 +48,12 @@ export function SiteNav() {
               className="text-muted-foreground transition-colors hover:text-foreground"
             >
               Cartes cadeaux
+            </Link>
+            <Link
+              href="/recommandation"
+              className="text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Quiz
             </Link>
           </nav>
         </div>
@@ -96,6 +108,13 @@ export function SiteNav() {
         <nav className="border-t px-4 py-3 md:hidden">
           <div className="flex flex-col gap-2 text-sm">
             <Link
+              href="/produits"
+              className="rounded-md px-3 py-2 hover:bg-muted"
+              onClick={() => setMobileOpen(false)}
+            >
+              Produits
+            </Link>
+            <Link
               href="/occasion/anniversaire"
               className="rounded-md px-3 py-2 hover:bg-muted"
               onClick={() => setMobileOpen(false)}
@@ -115,6 +134,13 @@ export function SiteNav() {
               onClick={() => setMobileOpen(false)}
             >
               Cartes cadeaux
+            </Link>
+            <Link
+              href="/recommandation"
+              className="rounded-md px-3 py-2 hover:bg-muted"
+              onClick={() => setMobileOpen(false)}
+            >
+              Quiz cadeau
             </Link>
           </div>
         </nav>
