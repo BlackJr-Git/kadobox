@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
-export default function MesCartesCadeauxPage() {
+export default function ClientCartesCadeauxPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">

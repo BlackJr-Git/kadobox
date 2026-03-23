@@ -1,10 +1,7 @@
-import Link from "next/link"
+import { db } from "@/lib/db"
+import { order } from "@/lib/schema"
+import { desc } from "drizzle-orm"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { auth } from "@/lib/auth"
-import { headers } from "next/headers"
-import { getOrdersByUser } from "@/lib/queries/orders"
-import { redirect } from "next/navigation"
 
 const STATUS_LABELS: Record<
   string,
@@ -21,65 +18,60 @@ const STATUS_LABELS: Record<
   cancelled: { label: "Annulée", variant: "destructive" },
 }
 
-export default async function CommandesPage() {
-  const session = await auth.api.getSession({ headers: await headers() })
-  if (!session?.user) redirect("/login")
-
-  const orders = await getOrdersByUser(session.user.id)
-
-  if (orders.length === 0) {
-    return (
-      <div className="mx-auto max-w-4xl px-4 py-10">
-        <h1 className="text-2xl font-bold">Mes commandes</h1>
-        <div className="mt-8 rounded-lg border p-8 text-center">
-          <span className="text-4xl">📦</span>
-          <h2 className="mt-4 text-lg font-bold">
-            Aucune commande pour le moment
-          </h2>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Vos commandes apparaîtront ici une fois que vous aurez passé une
-            commande.
-          </p>
-          <Button className="mt-4" render={<Link href="/produits" />}>
-            Découvrir nos produits
-          </Button>
-        </div>
-      </div>
-    )
-  }
+export default async function DashboardCommandesPage() {
+  const orders = await db.query.order.findMany({
+    with: { user: true, items: true },
+    orderBy: [desc(order.createdAt)],
+  })
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-10">
-      <h1 className="text-2xl font-bold">Mes commandes ({orders.length})</h1>
-      <div className="mt-6 space-y-4">
-        {orders.map((o) => {
-          const status = STATUS_LABELS[o.status] ?? {
-            label: o.status,
-            variant: "secondary" as const,
-          }
-          return (
-            <div key={o.id} className="rounded-lg border p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <span className="font-medium">{o.orderNumber}</span>
-                  <span className="ml-3 text-sm text-muted-foreground">
-                    {new Date(o.createdAt).toLocaleDateString("fr-FR")}
-                  </span>
-                </div>
-                <Badge variant={status.variant}>{status.label}</Badge>
-              </div>
-              <div className="mt-2 flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">
-                  {o.items.length} article{o.items.length !== 1 ? "s" : ""}
-                </span>
-                <span className="font-bold">
-                  {Number(o.total).toLocaleString("fr-CD")} CDF
-                </span>
-              </div>
-            </div>
-          )
-        })}
-      </div>
+    <div className="space-y-6">
+      <h1 className="text-2xl font-bold">Commandes ({orders.length})</h1>
+
+      {orders.length === 0 ? (
+        <div className="rounded-lg border p-8 text-center text-muted-foreground">
+          Aucune commande pour le moment.
+        </div>
+      ) : (
+        <div className="overflow-hidden rounded-lg border">
+          <table className="w-full text-sm">
+            <thead className="border-b bg-muted/50">
+              <tr>
+                <th className="px-4 py-3 text-left font-medium">N° commande</th>
+                <th className="px-4 py-3 text-left font-medium">Client</th>
+                <th className="px-4 py-3 text-left font-medium">Articles</th>
+                <th className="px-4 py-3 text-left font-medium">Total</th>
+                <th className="px-4 py-3 text-left font-medium">Statut</th>
+                <th className="px-4 py-3 text-left font-medium">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {orders.map((o) => {
+                const status = STATUS_LABELS[o.status] || {
+                  label: o.status,
+                  variant: "secondary" as const,
+                }
+                return (
+                  <tr key={o.id} className="border-b last:border-0">
+                    <td className="px-4 py-3 font-medium">{o.orderNumber}</td>
+                    <td className="px-4 py-3">{o.user?.name || "—"}</td>
+                    <td className="px-4 py-3">{o.items.length}</td>
+                    <td className="px-4 py-3">
+                      {Number(o.total).toLocaleString("fr-CD")} CDF
+                    </td>
+                    <td className="px-4 py-3">
+                      <Badge variant={status.variant}>{status.label}</Badge>
+                    </td>
+                    <td className="px-4 py-3 text-muted-foreground">
+                      {new Date(o.createdAt).toLocaleDateString("fr-FR")}
+                    </td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   )
 }

@@ -1,8 +1,9 @@
 import { db } from "@/lib/db"
 import { user } from "@/lib/schema"
 import { desc } from "drizzle-orm"
+import { Badge } from "@/components/ui/badge"
 
-export default async function AdminClientsPage() {
+export default async function DashboardClientsPage() {
   const users = await db.query.user.findMany({
     orderBy: [desc(user.createdAt)],
   })
@@ -22,6 +23,7 @@ export default async function AdminClientsPage() {
               <tr>
                 <th className="px-4 py-3 text-left font-medium">Nom</th>
                 <th className="px-4 py-3 text-left font-medium">Email</th>
+                <th className="px-4 py-3 text-left font-medium">Rôle</th>
                 <th className="px-4 py-3 text-left font-medium">Vérifié</th>
                 <th className="px-4 py-3 text-left font-medium">Inscrit le</th>
               </tr>
@@ -31,6 +33,11 @@ export default async function AdminClientsPage() {
                 <tr key={u.id} className="border-b last:border-0">
                   <td className="px-4 py-3 font-medium">{u.name}</td>
                   <td className="px-4 py-3 text-muted-foreground">{u.email}</td>
+                  <td className="px-4 py-3">
+                    <Badge variant={u.role === "admin" ? "default" : "secondary"}>
+                      {u.role === "admin" ? "Admin" : "Client"}
+                    </Badge>
+                  </td>
                   <td className="px-4 py-3">
                     {u.emailVerified ? "✅" : "❌"}
                   </td>

@@ -9,6 +9,22 @@ const db = drizzle({ client: sql, schema })
 async function seed() {
   console.log("🌱 Seeding database...")
 
+  // Admin User
+  const adminUser = await db
+    .insert(schema.user)
+    .values({
+      id: "admin_user_001",
+      name: "Admin KDOBOX",
+      email: "admin@kdobox.com",
+      emailVerified: true,
+      role: "admin",
+      phone: "+243 999 999 999",
+    })
+    .onConflictDoNothing()
+    .returning()
+
+  console.log(`✅ ${adminUser.length} utilisateur admin créé`)
+
   // Occasions
   const occasions = await db
     .insert(schema.occasion)

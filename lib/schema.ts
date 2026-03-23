@@ -37,6 +37,8 @@ export const wrappingTypeEnum = pgEnum("wrapping_type", [
   "luxury",
 ])
 
+export const userRoleEnum = pgEnum("user_role", ["admin", "client"])
+
 // ============================================================
 // AUTH (Better Auth)
 // ============================================================
@@ -48,6 +50,7 @@ export const user = pgTable("user", {
   emailVerified: boolean("email_verified").default(false).notNull(),
   image: text("image"),
   phone: text("phone"),
+  role: userRoleEnum("role").default("client").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")
     .defaultNow()

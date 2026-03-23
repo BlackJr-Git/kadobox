@@ -3,7 +3,7 @@ import { product } from "@/lib/schema"
 import { desc } from "drizzle-orm"
 import { Badge } from "@/components/ui/badge"
 
-export default async function AdminProduitsPage() {
+export default async function DashboardProduitsPage() {
   const products = await db.query.product.findMany({
     with: { images: true },
     orderBy: [desc(product.createdAt)],
