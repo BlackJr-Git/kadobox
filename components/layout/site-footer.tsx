@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { NewsletterForm } from "@/components/layout/newsletter-form"
 
 export function SiteFooter() {
   return (
@@ -121,8 +122,21 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-10 border-t pt-6 text-center text-xs text-muted-foreground">
-          © {new Date().getFullYear()} KDOBOX. Tous droits réservés.
+        <div className="mt-10 border-t pt-6">
+          <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
+            <div>
+              <h4 className="text-sm font-semibold">Newsletter</h4>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Recevez nos offres et idées cadeaux
+              </p>
+            </div>
+            <div className="w-full max-w-xs">
+              <NewsletterForm />
+            </div>
+          </div>
+          <p className="mt-6 text-center text-xs text-muted-foreground">
+            © {new Date().getFullYear()} KDOBOX. Tous droits réservés.
+          </p>
         </div>
       </div>
     </footer>

@@ -3,7 +3,14 @@ import Image from "next/image"
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
-import { getBundleBySlug } from "@/lib/queries/bundles"
+import { getBundleBySlug, getBundles } from "@/lib/queries/bundles"
+
+export const revalidate = 3600
+
+export async function generateStaticParams() {
+  const bundles = await getBundles()
+  return bundles.map((b) => ({ slug: b.slug }))
+}
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -52,7 +59,7 @@ export default async function CoffretPage({ params }: Props) {
             </div>
           )}
           {savingsPercent > 0 && (
-            <Badge className="absolute left-3 top-3 bg-green-600 text-white">
+            <Badge className="absolute top-3 left-3 bg-green-600 text-white">
               Économisez {savingsPercent}%
             </Badge>
           )}

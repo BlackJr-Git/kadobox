@@ -7,10 +7,10 @@ import { HugeiconsIcon } from "@hugeicons/react"
 import {
   ShoppingBag02Icon,
   UserIcon,
-  SearchIcon,
   Menu01Icon,
 } from "@hugeicons/core-free-icons"
 import { useState } from "react"
+import { SearchDialog } from "@/components/layout/search-dialog"
 
 export function SiteNav() {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -59,13 +59,7 @@ export function SiteNav() {
         </div>
 
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon" className="hidden md:flex">
-            <HugeiconsIcon
-              icon={SearchIcon}
-              strokeWidth={2}
-              className="size-5"
-            />
-          </Button>
+          <SearchDialog />
 
           <Button variant="ghost" size="icon" render={<Link href="/login" />}>
             <HugeiconsIcon icon={UserIcon} strokeWidth={2} className="size-5" />

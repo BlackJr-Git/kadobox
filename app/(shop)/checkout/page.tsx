@@ -25,6 +25,8 @@ export default function CheckoutPage() {
   const clearCart = useCartStore((s) => s.clearCart)
   const [step, setStep] = useState<CheckoutStep>("info")
   const [orderNumber, setOrderNumber] = useState<string | null>(null)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState("")
 
   const [form, setForm] = useState({
     fullName: "",
@@ -76,11 +78,43 @@ export default function CheckoutPage() {
     )
   }
 
-  const handleSubmitOrder = () => {
-    const num = `KDB-${String(Math.floor(10000 + Math.random() * 90000))}`
-    setOrderNumber(num)
-    clearCart()
-    setStep("confirmation")
+  const handleSubmitOrder = async () => {
+    setSubmitting(true)
+    setError("")
+    try {
+      const res = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: items.map((item) => ({
+            productId: item.productId,
+            quantity: item.quantity,
+            unitPrice: item.price,
+          })),
+          address: {
+            fullName: form.fullName,
+            phone: form.phone,
+            addressLine1: form.addressLine1,
+            addressLine2: form.addressLine2 || undefined,
+            city: form.city,
+            province: form.province || undefined,
+          },
+        }),
+      })
+      if (!res.ok) {
+        const data = await res.json()
+        setError(data.error || "Erreur lors de la création de la commande")
+        return
+      }
+      const data = await res.json()
+      setOrderNumber(data.orderNumber)
+      clearCart()
+      setStep("confirmation")
+    } catch {
+      setError("Erreur réseau. Veuillez réessayer.")
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -100,9 +134,7 @@ export default function CheckoutPage() {
             </div>
             <span
               className={`hidden text-sm sm:inline ${
-                i <= currentStepIndex
-                  ? "font-medium"
-                  : "text-muted-foreground"
+                i <= currentStepIndex ? "font-medium" : "text-muted-foreground"
               }`}
             >
               {s.label}
@@ -157,9 +189,7 @@ export default function CheckoutPage() {
                 <input
                   type="email"
                   value={form.email}
-                  onChange={(e) =>
-                    setForm({ ...form, email: e.target.value })
-                  }
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
                   className="h-9 w-full rounded-lg border bg-background px-3 text-sm outline-none focus:border-ring focus:ring-2 focus:ring-ring/50"
                   placeholder="jean@example.com"
                 />
@@ -224,9 +254,7 @@ export default function CheckoutPage() {
                   <input
                     type="text"
                     value={form.city}
-                    onChange={(e) =>
-                      setForm({ ...form, city: e.target.value })
-                    }
+                    onChange={(e) => setForm({ ...form, city: e.target.value })}
                     className="h-9 w-full rounded-lg border bg-background px-3 text-sm outline-none focus:border-ring focus:ring-2 focus:ring-ring/50"
                     placeholder="Kinshasa"
                   />
@@ -272,7 +300,9 @@ export default function CheckoutPage() {
               <h2 className="text-xl font-bold">Paiement</h2>
 
               <div className="rounded-lg border p-6">
-                <h3 className="mb-4 font-medium">Choisir un mode de paiement</h3>
+                <h3 className="mb-4 font-medium">
+                  Choisir un mode de paiement
+                </h3>
                 <div className="space-y-3">
                   <label className="flex cursor-pointer items-center gap-3 rounded-lg border p-4 transition-colors hover:bg-muted">
                     <input
@@ -319,8 +349,16 @@ export default function CheckoutPage() {
                 </p>
               </div>
 
-              <Button className="mt-4 w-full" size="lg" onClick={handleSubmitOrder}>
-                Payer {totalPrice.toLocaleString("fr-CD")} CDF
+              {error && <p className="text-sm text-destructive">{error}</p>}
+              <Button
+                className="mt-4 w-full"
+                size="lg"
+                onClick={handleSubmitOrder}
+                disabled={submitting}
+              >
+                {submitting
+                  ? "Traitement en cours..."
+                  : `Payer ${totalPrice.toLocaleString("fr-CD")} CDF`}
               </Button>
             </div>
           )}

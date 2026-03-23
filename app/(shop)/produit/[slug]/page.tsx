@@ -3,12 +3,17 @@ import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { getProductBySlug } from "@/lib/queries/products"
+import { getSimilarProducts } from "@/lib/services/recommendations"
+import { ProductGrid } from "@/components/product/product-grid"
 import { AddToCartButton } from "./add-to-cart-button"
+import { AddToWishlistButton } from "./add-to-wishlist-button"
 import Link from "next/link"
 import { generateProductJsonLd } from "@/lib/seo"
 import { db } from "@/lib/db"
 import { product as productTable } from "@/lib/schema"
 import { eq } from "drizzle-orm"
+
+export const revalidate = 3600
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -38,6 +43,8 @@ export default async function ProductPage({ params }: Props) {
   const product = await getProductBySlug(slug)
 
   if (!product) notFound()
+
+  const similarProducts = await getSimilarProducts(product.id, 4)
 
   const images = product.images?.sort((a, b) => a.sortOrder - b.sortOrder)
   const mainImage = images?.[0]
@@ -187,16 +194,19 @@ export default async function ProductPage({ params }: Props) {
             <p className="text-muted-foreground">{product.shortDescription}</p>
           )}
 
-          {/* Add to cart */}
-          <div className="mt-6">
-            <AddToCartButton
-              productId={product.id}
-              name={product.name}
-              price={Number(product.price)}
-              image={mainImage?.url || null}
-              slug={product.slug}
-              disabled={product.stock <= 0}
-            />
+          {/* Add to cart + wishlist */}
+          <div className="mt-6 flex items-center gap-3">
+            <div className="flex-1">
+              <AddToCartButton
+                productId={product.id}
+                name={product.name}
+                price={Number(product.price)}
+                image={mainImage?.url || null}
+                slug={product.slug}
+                disabled={product.stock <= 0}
+              />
+            </div>
+            <AddToWishlistButton productId={product.id} />
           </div>
 
           <Separator className="my-5" />
@@ -242,6 +252,14 @@ export default async function ProductPage({ params }: Props) {
               </div>
             ))}
           </div>
+        </section>
+      )}
+
+      {/* Similar products */}
+      {similarProducts.length > 0 && (
+        <section className="mt-12">
+          <h2 className="mb-6 text-xl font-bold">Vous aimerez aussi</h2>
+          <ProductGrid products={similarProducts} />
         </section>
       )}
     </div>

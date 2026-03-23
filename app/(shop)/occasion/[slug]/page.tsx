@@ -11,6 +11,8 @@ import { db } from "@/lib/db"
 import { occasion as occasionTable } from "@/lib/schema"
 import { eq } from "drizzle-orm"
 
+export const revalidate = 3600
+
 type Props = {
   params: Promise<{ slug: string }>
 }

@@ -271,6 +271,8 @@ export const order = pgTable(
       () => shippingAddress.id
     ),
     notes: text("notes"),
+    paymentMethod: text("payment_method"),
+    paymentReference: text("payment_reference"),
     paidAt: timestamp("paid_at"),
     shippedAt: timestamp("shipped_at"),
     deliveredAt: timestamp("delivered_at"),

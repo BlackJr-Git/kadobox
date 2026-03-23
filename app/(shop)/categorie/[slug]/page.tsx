@@ -1,8 +1,25 @@
 import { notFound } from "next/navigation"
 import { ProductGrid } from "@/components/product/product-grid"
-import { getCategoryBySlug, getProductsByCategory, getCategories } from "@/lib/queries/categories"
+import {
+  getCategoryBySlug,
+  getProductsByCategory,
+  getCategories,
+} from "@/lib/queries/categories"
+import { db } from "@/lib/db"
+import { category as categoryTable } from "@/lib/schema"
+import { eq } from "drizzle-orm"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+
+export const revalidate = 3600
+
+export async function generateStaticParams() {
+  const categories = await db.query.category.findMany({
+    where: eq(categoryTable.isActive, true),
+    columns: { slug: true },
+  })
+  return categories.map((c) => ({ slug: c.slug }))
+}
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -40,9 +57,7 @@ export default async function CategoriePage({ params }: Props) {
         <div className="mx-auto max-w-7xl px-4">
           <h1 className="text-3xl font-bold md:text-4xl">{category.name}</h1>
           {category.description && (
-            <p className="mt-2 text-muted-foreground">
-              {category.description}
-            </p>
+            <p className="mt-2 text-muted-foreground">{category.description}</p>
           )}
           <p className="mt-1 text-sm text-muted-foreground">
             {products.length} produit{products.length !== 1 ? "s" : ""}

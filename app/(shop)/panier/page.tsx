@@ -162,7 +162,11 @@ export default function CartPage() {
             <span>{totalPrice.toLocaleString("fr-CD")} CDF</span>
           </div>
 
-          <Button className="mt-6 w-full" size="lg">
+          <Button
+            className="mt-6 w-full"
+            size="lg"
+            render={<Link href="/checkout" />}
+          >
             Passer la commande
           </Button>
 

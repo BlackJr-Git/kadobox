@@ -11,10 +11,30 @@ export default function ContactPage() {
     message: "",
   })
   const [sent, setSent] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setSent(true)
+    setLoading(true)
+    setError("")
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      })
+      if (!res.ok) {
+        const data = await res.json()
+        setError(data.error || "Erreur lors de l'envoi")
+        return
+      }
+      setSent(true)
+    } catch {
+      setError("Erreur réseau")
+    } finally {
+      setLoading(false)
+    }
   }
 
   if (sent) {
@@ -89,12 +109,19 @@ export default function ContactPage() {
             placeholder="Votre message..."
           />
         </div>
+        {error && <p className="text-sm text-destructive">{error}</p>}
         <Button
           type="submit"
           className="w-full"
-          disabled={!form.name || !form.email || !form.subject || !form.message}
+          disabled={
+            loading ||
+            !form.name ||
+            !form.email ||
+            !form.subject ||
+            !form.message
+          }
         >
-          Envoyer
+          {loading ? "Envoi en cours..." : "Envoyer"}
         </Button>
       </form>
 
