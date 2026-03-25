@@ -1,10 +1,51 @@
 import Link from "next/link"
 import Image from "next/image"
+import type { Metadata } from "next"
 import { Button } from "@/components/ui/button"
 import { ProductGrid } from "@/components/product/product-grid"
 import { getOccasions } from "@/lib/queries/occasions"
 import { getFeaturedProducts, getLatestProducts } from "@/lib/queries/products"
 import { getBundles } from "@/lib/queries/bundles"
+
+export const metadata: Metadata = {
+  title: "Cadeau Chrono - Trouvez le cadeau parfait pour chaque occasion",
+  description:
+    "Découvrez des cadeaux uniques et personnalisés pour toutes les occasions. Livraison rapide à Kinshasa et partout en RDC. Des idées cadeaux pour lui, pour elle et pour enfants.",
+  keywords: [
+    "cadeaux",
+    "Kinshasa",
+    "RDC",
+    "livraison",
+    "occasions",
+    "anniversaire",
+    "mariage",
+    "Saint-Valentin",
+  ],
+  openGraph: {
+    title: "Cadeau Chrono - Trouvez le cadeau parfait pour chaque occasion",
+    description:
+      "Découvrez des cadeaux uniques et personnalisés pour toutes les occasions. Livraison rapide à Kinshasa et partout en RDC.",
+    type: "website",
+    locale: "fr_CD",
+    url: "https://kadobox.vercel.app",
+    siteName: "Cadeau Chrono",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Cadeau Chrono - Cadeaux pour toutes les occasions",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Cadeau Chrono - Trouvez le cadeau parfait pour chaque occasion",
+    description:
+      "Découvrez des cadeaux uniques et personnalisés pour toutes les occasions. Livraison rapide à Kinshasa et partout en RDC.",
+    images: ["/og-image.jpg"],
+  },
+}
 
 const BUDGET_RANGES = [
   { label: "Moins de 5 000 CDF", min: 0, max: 5000, emoji: "💰" },
