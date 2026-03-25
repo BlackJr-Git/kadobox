@@ -129,7 +129,7 @@ export default function ContactPage() {
         <div className="text-center">
           <span className="text-2xl">📧</span>
           <h3 className="mt-2 font-medium">Email</h3>
-          <p className="text-sm text-muted-foreground">contact@kdobox.com</p>
+          <p className="text-sm text-muted-foreground">contact@cadeauchrono.com</p>
         </div>
         <div className="text-center">
           <span className="text-2xl">📱</span>

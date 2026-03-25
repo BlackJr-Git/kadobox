@@ -3,7 +3,7 @@ import { db } from "@/lib/db"
 import { product, occasion, category } from "@/lib/schema"
 import { eq } from "drizzle-orm"
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://kdobox.com"
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://cadeauchrono.com"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [products, occasions, categories] = await Promise.all([

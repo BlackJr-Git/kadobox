@@ -325,7 +325,7 @@ export default function CheckoutPage() {
                       className="size-4 accent-primary"
                     />
                     <div>
-                      <p className="font-medium">Carte cadeau KDOBOX</p>
+                      <p className="font-medium">Carte cadeau</p>
                       <p className="text-sm text-muted-foreground">
                         Utiliser le solde d&apos;une carte cadeau
                       </p>

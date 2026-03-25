@@ -31,10 +31,10 @@ export async function generateMetadata({ params }: Props) {
   if (!category) return { title: "Catégorie introuvable" }
 
   return {
-    title: `${category.name} | KDOBOX`,
+    title: `${category.name} | Cadeau Chrono`,
     description:
       category.description ||
-      `Découvrez notre sélection de ${category.name} sur KDOBOX.`,
+      `Découvrez notre sélection de ${category.name} sur Cadeau Chrono.`,
   }
 }
 

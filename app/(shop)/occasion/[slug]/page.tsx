@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: Props) {
   if (!occasion) return { title: "Occasion introuvable" }
 
   return {
-    title: `Cadeaux ${occasion.name} | KDOBOX`,
+    title: `Cadeaux ${occasion.name} | Cadeau Chrono`,
     description: `Découvre les meilleurs cadeaux pour ${occasion.name}. Livraison rapide et personnalisation offerte.`,
   }
 }

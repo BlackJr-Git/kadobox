@@ -2,9 +2,9 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
 export const metadata = {
-  title: "Cartes Cadeaux | KDOBOX",
+  title: "Cartes Cadeaux | Cadeau Chrono",
   description:
-    "Offrez une carte cadeau KDOBOX et laissez le destinataire choisir son cadeau parfait.",
+    "Offrez une carte cadeau Cadeau Chrono et laissez le destinataire choisir son cadeau parfait.",
 }
 
 const AMOUNTS = [5000, 10000, 20000, 50000, 100000]

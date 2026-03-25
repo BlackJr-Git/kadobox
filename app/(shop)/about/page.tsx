@@ -2,19 +2,19 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
 export const metadata = {
-  title: "À propos | KDOBOX",
+  title: "À propos | Cadeau Chrono",
   description:
-    "Découvrez KDOBOX, votre assistant pour trouver le cadeau parfait en RDC. Notre mission : simplifier l'art d'offrir.",
+    "Découvrez Cadeau Chrono, votre assistant pour trouver le cadeau parfait en RDC. Notre mission : simplifier l'art d'offrir.",
 }
 
 export default function AboutPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-12">
-      <h1 className="text-3xl font-bold md:text-4xl">À propos de KDOBOX</h1>
+      <h1 className="text-3xl font-bold md:text-4xl">À propos de Cadeau Chrono</h1>
 
       <section className="mt-8 space-y-4 text-muted-foreground">
         <p className="text-lg">
-          <strong className="text-foreground">KDOBOX</strong> est né d&apos;un
+          <strong className="text-foreground">Cadeau Chrono</strong> est né d&apos;un
           constat simple : trouver un cadeau ne devrait pas être stressant.
         </p>
         <p>
@@ -56,7 +56,7 @@ export default function AboutPage() {
       <section className="mt-12 space-y-4 text-muted-foreground">
         <h2 className="text-xl font-bold text-foreground">Notre mission</h2>
         <p>
-          Chez KDOBOX, nous croyons que l&apos;art d&apos;offrir peut être
+          Chez Cadeau Chrono, nous croyons que l&apos;art d&apos;offrir peut être
           simple, rapide et joyeux. Nous combinons technologie et curation pour
           proposer une expérience d&apos;achat unique en République Démocratique
           du Congo.

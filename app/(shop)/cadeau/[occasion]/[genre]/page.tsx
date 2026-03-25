@@ -32,8 +32,8 @@ export async function generateMetadata({ params }: Props) {
   const occasionName = occ?.name || occasion
 
   return {
-    title: `Cadeau ${occasionName} ${genreLabel} | KDOBOX`,
-    description: `Idées cadeaux ${occasionName} ${genreLabel.toLowerCase()}. Trouvez le cadeau parfait sur KDOBOX avec livraison rapide en RDC.`,
+    title: `Cadeau ${occasionName} ${genreLabel} | Cadeau Chrono`,
+    description: `Idées cadeaux ${occasionName} ${genreLabel.toLowerCase()}. Trouvez le cadeau parfait sur Cadeau Chrono avec livraison rapide en RDC.`,
   }
 }
 

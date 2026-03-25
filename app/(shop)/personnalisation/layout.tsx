@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Personnalisation | KDOBOX",
+  title: "Personnalisation | Cadeau Chrono",
   description: "Personnalisez votre cadeau avec un message, un emballage premium et une livraison planifiée.",
 }
 

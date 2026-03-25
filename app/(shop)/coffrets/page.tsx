@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { getBundles } from "@/lib/queries/bundles"
 
 export const metadata = {
-  title: "Coffrets Cadeaux | KDOBOX",
+  title: "Coffrets Cadeaux | Cadeau Chrono",
   description:
     "Découvrez nos coffrets cadeaux soigneusement composés pour chaque occasion.",
 }

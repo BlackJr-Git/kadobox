@@ -22,9 +22,9 @@ export async function generateMetadata({ params }: Props) {
   if (!bundle) return { title: "Coffret introuvable" }
 
   return {
-    title: `${bundle.name} | KDOBOX`,
+    title: `${bundle.name} | Cadeau Chrono`,
     description:
-      bundle.description || `Coffret cadeau ${bundle.name} sur KDOBOX`,
+      bundle.description || `Coffret cadeau ${bundle.name} sur Cadeau Chrono`,
   }
 }
 

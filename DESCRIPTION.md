@@ -1,4 +1,4 @@
-# KDOBOX - Documentation Projet
+# Cadeau Chrono - Documentation Projet
 
 > **Mission** : "Je trouve un cadeau rapidement sans réfléchir"
 >
@@ -18,7 +18,7 @@
 
 ### 1.2 Positionnement
 
-KDOBOX ≠ e-commerce classique
+Cadeau Chrono ≠ e-commerce classique
 
 **C'est un assistant pour trouver des cadeaux** :
 
