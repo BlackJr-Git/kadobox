@@ -27,6 +27,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useSession, signOut } from "@/lib/auth-client"
+import { usePathname } from "next/navigation"
 
 // Composant pour l'utilisateur connecté
 function NavUser({
@@ -107,6 +108,13 @@ export function SiteNav() {
   const totalItems = useCartStore((s) => s.totalItems())
   const { data: session, isPending } = useSession()
   const user = session?.user
+  const pathname = usePathname()
+
+  // Fonction pour stocker l'URL de redirection avant de rediriger vers login
+  const handleLoginRedirect = () => {
+    // Stocker l'URL actuelle dans sessionStorage
+    sessionStorage.setItem("redirectUrl", pathname)
+  }
 
   return (
     <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
@@ -165,7 +173,11 @@ export function SiteNav() {
           ) : user ? (
             <NavUser user={user} />
           ) : (
-            <Button variant="ghost" size="icon" render={<Link href="/login" />}>
+            <Button
+              variant="ghost"
+              size="icon"
+              render={<Link href="/login" onClick={handleLoginRedirect} />}
+            >
               <HugeiconsIcon
                 icon={UserIcon}
                 strokeWidth={2}

@@ -59,7 +59,17 @@ export function SignupForm({
         return
       }
 
-      router.push("/client")
+      // Récupérer l'URL de redirection depuis les query params ou sessionStorage
+      const urlParams = new URLSearchParams(window.location.search)
+      const redirectTo =
+        urlParams.get("redirect") ||
+        sessionStorage.getItem("redirectUrl") ||
+        "/"
+
+      // Nettoyer le sessionStorage
+      sessionStorage.removeItem("redirectUrl")
+
+      router.push(redirectTo)
       router.refresh()
     } catch {
       setError("Erreur de création de compte. Veuillez réessayer.")

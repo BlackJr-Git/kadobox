@@ -28,7 +28,9 @@ export default async function WishlistPage() {
             Sauvegardez vos produits favoris en vous connectant.
           </p>
           <div className="mt-6 flex gap-3">
-            <Button render={<Link href="/login" />}>Se connecter</Button>
+            <Button render={<Link href="/login?redirect=/wishlist" />}>
+              Se connecter
+            </Button>
             <Button variant="outline" render={<Link href="/produits" />}>
               Voir les produits
             </Button>
