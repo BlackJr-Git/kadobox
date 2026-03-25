@@ -24,7 +24,7 @@ export function ProductGrid({ products }: { products: Product[] }) {
   }
 
   return (
-    <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
+    <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-3">
       {products.map((product) => {
         const mainImage = product.images?.sort(
           (a, b) => a.sortOrder - b.sortOrder
