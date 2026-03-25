@@ -43,31 +43,107 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-linear-to-br from-primary/5 via-background to-primary/10">
-        <div className="mx-auto max-w-7xl px-4 py-20 md:py-32">
-          <div className="mx-auto max-w-2xl text-center">
-            <h1 className="text-4xl font-bold tracking-tight md:text-6xl">
-              Trouve le cadeau parfait{" "}
-              <span className="text-primary">en 30 secondes</span>
-            </h1>
-            <p className="mt-4 text-lg text-muted-foreground md:text-xl">
-              Des cadeaux pour chaque occasion, personnalisés avec amour. Fini
-              le stress, on s&apos;occupe de tout.
-            </p>
-            <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-              <Button size="lg" render={<Link href="#occasions" />}>
-                Trouver un cadeau
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                render={<Link href="/coffrets" />}
-              >
-                Voir les coffrets
-              </Button>
+      {/* Hero Bento Grid */}
+      <section className="mx-auto max-w-7xl px-4 py-8 md:py-12">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:grid-rows-3">
+          {/* Main Hero Card - spans 2 cols, 2 rows */}
+          <div className="relative col-span-1 row-span-2 overflow-hidden rounded-2xl bg-gradient-to-br from-primary/10 via-secondary to-accent p-6 md:col-span-2 md:p-8">
+            <div className="relative z-10 flex h-full flex-col justify-between">
+              <div>
+                <span className="inline-block rounded-full bg-primary/90 px-3 py-1 text-xs font-medium text-primary-foreground backdrop-blur-sm">
+                  ✨ Nouveau
+                </span>
+                <h1 className="mt-4 text-3xl font-bold tracking-tight text-foreground md:text-5xl">
+                  Trouve le cadeau
+                  <br />
+                  <span className="text-primary">parfait</span>
+                </h1>
+                <p className="mt-3 max-w-md text-sm text-muted-foreground md:text-base">
+                  Des cadeaux uniques pour chaque occasion. Fini le stress, on
+                  s&apos;occupe de tout.
+                </p>
+              </div>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Button size="lg" render={<Link href="#occasions" />}>
+                  Trouver un cadeau
+                </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  render={<Link href="/coffrets" />}
+                >
+                  Voir les coffrets
+                </Button>
+              </div>
+            </div>
+            <div className="absolute -right-10 -bottom-10 text-9xl opacity-10">
+              🎁
             </div>
           </div>
+
+          {/* Quick Gift Card */}
+          <Link
+            href="/recommandation"
+            className="group relative overflow-hidden rounded-2xl bg-primary p-5 transition-all hover:shadow-lg"
+          >
+            <div className="relative z-10">
+              <p className="text-xs text-primary-foreground/70">
+                Pas d&apos;idée ?
+              </p>
+              <p className="mt-1 text-lg font-semibold text-primary-foreground">
+                Quiz Cadeau
+              </p>
+              <p className="mt-1 text-xs text-primary-foreground/70">
+                3 questions, 1 cadeau idéal
+              </p>
+            </div>
+            <div className="absolute -right-2 -bottom-2 text-5xl transition-transform group-hover:scale-110">
+              🧠
+            </div>
+          </Link>
+
+          {/* Stats Card */}
+          <div className="flex flex-col justify-center rounded-2xl bg-muted p-5 text-center">
+            <p className="text-3xl font-bold text-foreground">100%</p>
+            <p className="text-xs text-muted-foreground">
+              Satisfaction garantie
+            </p>
+          </div>
+
+          {/* Occasion Card */}
+          <Link
+            href="/occasion/anniversaire"
+            className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-secondary to-muted p-5 transition-all hover:shadow-lg"
+          >
+            <p className="relative z-10 text-xs font-medium text-muted-foreground">
+              Occasions
+            </p>
+            <p className="relative z-10 mt-1 text-lg font-semibold text-foreground">
+              Anniversaire
+            </p>
+            <p className="relative z-10 mt-1 text-xs text-muted-foreground">
+              +12 autres occasions
+            </p>
+            <div className="absolute -right-2 -bottom-2 text-5xl transition-transform group-hover:scale-110">
+              🎂
+            </div>
+          </Link>
+
+          {/* Coffrets Card */}
+          <Link
+            href="/coffrets"
+            className="group relative overflow-hidden rounded-2xl border bg-card p-5 transition-all hover:border-primary/50 hover:shadow-lg"
+          >
+            <p className="text-xs font-medium text-muted-foreground">
+              Prix réduits
+            </p>
+            <p className="mt-1 text-lg font-semibold text-foreground">
+              Coffrets
+            </p>
+            <div className="absolute -right-2 -bottom-2 text-5xl transition-transform group-hover:scale-110">
+              📦
+            </div>
+          </Link>
         </div>
       </section>
 
