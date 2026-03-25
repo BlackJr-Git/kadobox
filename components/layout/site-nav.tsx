@@ -26,19 +26,24 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useSession, signOut } from "@/lib/auth-client"
 
 // Composant pour l'utilisateur connecté
 function NavUser({
   user,
 }: {
-  user: { name: string; email: string; image?: string }
+  user: { name: string; email: string; image?: string | null }
 }) {
+  const handleLogout = async () => {
+    await signOut()
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Button variant="ghost" size="icon" className="relative rounded-full">
           <Avatar className="size-8">
-            <AvatarImage src={user.image} alt={user.name} />
+            <AvatarImage src={user.image || undefined} alt={user.name} />
             <AvatarFallback>{user.name.charAt(0).toUpperCase()}</AvatarFallback>
           </Avatar>
         </Button>
@@ -56,7 +61,7 @@ function NavUser({
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem render={<Link href="/compte" />}>
+          <DropdownMenuItem render={<Link href="/client" />}>
             <HugeiconsIcon
               icon={User03Icon}
               strokeWidth={2}
@@ -64,7 +69,7 @@ function NavUser({
             />
             Mon compte
           </DropdownMenuItem>
-          <DropdownMenuItem render={<Link href="/compte/commandes" />}>
+          <DropdownMenuItem render={<Link href="/client/commandes" />}>
             <HugeiconsIcon
               icon={ShoppingCart01Icon}
               strokeWidth={2}
@@ -72,7 +77,7 @@ function NavUser({
             />
             Mes commandes
           </DropdownMenuItem>
-          <DropdownMenuItem render={<Link href="/compte/parametres" />}>
+          <DropdownMenuItem render={<Link href="/client/profil" />}>
             <HugeiconsIcon
               icon={Settings01Icon}
               strokeWidth={2}
@@ -83,7 +88,7 @@ function NavUser({
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem variant="destructive">
+          <DropdownMenuItem variant="destructive" onClick={handleLogout}>
             <HugeiconsIcon
               icon={Logout01Icon}
               strokeWidth={2}
@@ -100,10 +105,8 @@ function NavUser({
 export function SiteNav() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const totalItems = useCartStore((s) => s.totalItems())
-
-  // Simulation utilisateur connecté (à remplacer par vraie auth)
-  const user = { name: "John Doe", email: "john@example.com", image: undefined }
-  const isLoggedIn = true // À remplacer par vrai état d'authentification
+  const { data: session, isPending } = useSession()
+  const user = session?.user
 
   return (
     <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
@@ -151,7 +154,15 @@ export function SiteNav() {
         <div className="flex items-center gap-2">
           <SearchDialog />
 
-          {isLoggedIn ? (
+          {isPending ? (
+            <Button variant="ghost" size="icon" disabled>
+              <HugeiconsIcon
+                icon={UserIcon}
+                strokeWidth={2}
+                className="size-5"
+              />
+            </Button>
+          ) : user ? (
             <NavUser user={user} />
           ) : (
             <Button variant="ghost" size="icon" render={<Link href="/login" />}>
