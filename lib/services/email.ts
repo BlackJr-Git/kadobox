@@ -1,5 +1,5 @@
 const RESEND_API_KEY = process.env.RESEND_API_KEY || ""
-const FROM_EMAIL = process.env.FROM_EMAIL || "KDOBOX <noreply@kdobox.com>"
+const FROM_EMAIL = process.env.FROM_EMAIL || "KDOBOX <noreply@cadeauchrono.com>"
 
 type EmailOptions = {
   to: string
