@@ -204,7 +204,12 @@ export default function RecommandationPage() {
           ) : results.length > 0 ? (
             <div className="grid gap-4 sm:grid-cols-2">
               {results.map((product) => (
-                <ProductCard key={product.id} product={product} />
+                <ProductCard
+                  key={product.id}
+                  {...product}
+                  image={product.images[0]?.url}
+                  imageAlt={product.images[0]?.alt}
+                />
               ))}
             </div>
           ) : (

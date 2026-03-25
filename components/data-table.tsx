@@ -86,14 +86,22 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { DragDropVerticalIcon, CheckmarkCircle01Icon, Loading03Icon, MoreVerticalCircle01Icon, LeftToRightListBulletIcon, ArrowDown01Icon, Add01Icon, ArrowLeftDoubleIcon, ArrowLeft01Icon, ArrowRight01Icon, ArrowRightDoubleIcon, ChartUpIcon } from "@hugeicons/core-free-icons"
+import {
+  DragDropVerticalIcon,
+  CheckmarkCircle01Icon,
+  Loading03Icon,
+  MoreVerticalCircle01Icon,
+  LeftToRightListBulletIcon,
+  ArrowDown01Icon,
+  Add01Icon,
+  ArrowLeftDoubleIcon,
+  ArrowLeft01Icon,
+  ArrowRight01Icon,
+  ArrowRightDoubleIcon,
+  ChartUpIcon,
+} from "@hugeicons/core-free-icons"
 
 export const schema = z.object({
   id: z.number(),
@@ -118,7 +126,11 @@ function DragHandle({ id }: { id: number }) {
       size="icon"
       className="size-7 text-muted-foreground hover:bg-transparent"
     >
-      <HugeiconsIcon icon={DragDropVerticalIcon} strokeWidth={2} className="size-3 text-muted-foreground" />
+      <HugeiconsIcon
+        icon={DragDropVerticalIcon}
+        strokeWidth={2}
+        className="size-3 text-muted-foreground"
+      />
       <span className="sr-only">Drag to reorder</span>
     </Button>
   )
@@ -181,7 +193,11 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
     cell: ({ row }) => (
       <Badge variant="outline" className="px-1.5 text-muted-foreground">
         {row.original.status === "Done" ? (
-          <HugeiconsIcon icon={CheckmarkCircle01Icon} strokeWidth={2} className="fill-green-500 dark:fill-green-400" />
+          <HugeiconsIcon
+            icon={CheckmarkCircle01Icon}
+            strokeWidth={2}
+            className="fill-green-500 dark:fill-green-400"
+          />
         ) : (
           <HugeiconsIcon icon={Loading03Icon} strokeWidth={2} />
         )}
@@ -438,9 +454,17 @@ export function DataTable({
             <DropdownMenuTrigger
               render={<Button variant="outline" size="sm" />}
             >
-              <HugeiconsIcon icon={LeftToRightListBulletIcon} strokeWidth={2} data-icon="inline-start" />
+              <HugeiconsIcon
+                icon={LeftToRightListBulletIcon}
+                strokeWidth={2}
+                data-icon="inline-start"
+              />
               Columns
-              <HugeiconsIcon icon={ArrowDown01Icon} strokeWidth={2} data-icon="inline-end" />
+              <HugeiconsIcon
+                icon={ArrowDown01Icon}
+                strokeWidth={2}
+                data-icon="inline-end"
+              />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-32">
               {table
@@ -675,7 +699,11 @@ function TableCellViewer({ item }: { item: z.infer<typeof schema> }) {
   const isMobile = useIsMobile()
   return (
     <Drawer direction={isMobile ? "bottom" : "right"}>
-      <DrawerTrigger render={<Button variant="link" className="w-fit px-0 text-left text-foreground" />}>{item.header}</DrawerTrigger>
+      <DrawerTrigger asChild>
+        <Button variant="link" className="w-fit px-0 text-left text-foreground">
+          {item.header}
+        </Button>
+      </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="gap-1">
           <DrawerTitle>{item.header}</DrawerTitle>
@@ -730,7 +758,11 @@ function TableCellViewer({ item }: { item: z.infer<typeof schema> }) {
               <div className="grid gap-2">
                 <div className="flex gap-2 leading-none font-medium">
                   Trending up by 5.2% this month{" "}
-                  <HugeiconsIcon icon={ChartUpIcon} strokeWidth={2} className="size-4" />
+                  <HugeiconsIcon
+                    icon={ChartUpIcon}
+                    strokeWidth={2}
+                    className="size-4"
+                  />
                 </div>
                 <div className="text-muted-foreground">
                   Showing total visitors for the last 6 months. This is just
@@ -851,7 +883,9 @@ function TableCellViewer({ item }: { item: z.infer<typeof schema> }) {
         </div>
         <DrawerFooter>
           <Button>Submit</Button>
-          <DrawerClose render={<Button variant="outline" />}></DrawerClose>
+          <DrawerClose asChild>
+            <Button variant="outline">Close</Button>
+          </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
