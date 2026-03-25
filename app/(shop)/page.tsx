@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ProductGrid } from "@/components/product/product-grid"
 import { getOccasions } from "@/lib/queries/occasions"
@@ -97,17 +98,30 @@ export default async function HomePage() {
                 3 questions, 1 cadeau idéal
               </p>
             </div>
-            <div className="absolute -right-2 -bottom-2 text-5xl transition-transform group-hover:scale-110">
-              🧠
+            <div className="absolute -right-2 -bottom-2 transition-transform group-hover:scale-110">
+              <Image
+                src="/quiz_cadeau.png"
+                alt="Quiz Cadeau"
+                width={100}
+                height={100}
+                className="object-contain"
+              />
             </div>
           </Link>
 
           {/* Stats Card */}
-          <div className="flex flex-col justify-center rounded-2xl bg-muted p-5 text-center">
-            <p className="text-3xl font-bold text-foreground">100%</p>
-            <p className="text-xs text-muted-foreground">
-              Satisfaction garantie
-            </p>
+          <div className="group relative flex flex-col justify-center overflow-hidden rounded-2xl p-5 text-center">
+            <Image
+              src="/satisfaction.jpg"
+              alt="Satisfaction garantie"
+              fill
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-black/40" />
+            <div className="relative z-10">
+              <p className="text-3xl font-bold text-white">100%</p>
+              <p className="text-xs text-white/90">Satisfaction garantie</p>
+            </div>
           </div>
 
           {/* Occasion Card */}
@@ -124,8 +138,14 @@ export default async function HomePage() {
             <p className="relative z-10 mt-1 text-xs text-muted-foreground">
               +12 autres occasions
             </p>
-            <div className="absolute -right-2 -bottom-2 text-5xl transition-transform group-hover:scale-110">
-              🎂
+            <div className="absolute -right-2 -bottom-2 transition-transform group-hover:scale-110">
+              <Image
+                src="/anniverssaire.png"
+                alt="Anniversaire"
+                width={100}
+                height={100}
+                className="object-contain"
+              />
             </div>
           </Link>
 
@@ -140,8 +160,14 @@ export default async function HomePage() {
             <p className="mt-1 text-lg font-semibold text-foreground">
               Coffrets
             </p>
-            <div className="absolute -right-2 -bottom-2 text-5xl transition-transform group-hover:scale-110">
-              📦
+            <div className="absolute -right-2 -bottom-2 transition-transform group-hover:scale-110">
+              <Image
+                src="/coffret_hero.png"
+                alt="Coffrets cadeaux"
+                width={100}
+                height={100}
+                className="object-contain"
+              />
             </div>
           </Link>
         </div>
