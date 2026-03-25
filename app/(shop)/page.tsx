@@ -17,19 +17,19 @@ const GIFT_IDEAS = [
   {
     label: "Pour lui",
     gender: "homme",
-    emoji: "👨",
+    image: "/men_illustration.png",
     href: "/produits?genre=homme",
   },
   {
     label: "Pour elle",
     gender: "femme",
-    emoji: "👩",
+    image: "/women_illustration.png",
     href: "/produits?genre=femme",
   },
   {
     label: "Pour enfant",
     gender: "enfant",
-    emoji: "👶",
+    image: "/kids_illustration.png",
     href: "/produits?genre=enfant",
   },
 ]
@@ -247,17 +247,27 @@ export default async function HomePage() {
             <h2 className="text-2xl font-bold md:text-3xl">Idées cadeaux</h2>
             <p className="mt-2 text-muted-foreground">Pour qui cherches-tu ?</p>
           </div>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {GIFT_IDEAS.map((idea) => (
               <Link
                 key={idea.gender}
                 href={idea.href}
-                className="group flex flex-col items-center gap-3 rounded-xl border bg-card p-8 text-center transition-all hover:border-primary/50 hover:shadow-md"
+                className="group relative overflow-hidden rounded-xl border bg-card p-8 transition-all hover:border-primary/50 hover:shadow-md sm:p-6"
               >
-                <span className="text-5xl">{idea.emoji}</span>
-                <span className="text-base font-semibold group-hover:text-primary">
-                  {idea.label}
-                </span>
+                <div className="relative z-10 text-left">
+                  <span className="text-base font-semibold group-hover:text-primary sm:text-lg">
+                    {idea.label}
+                  </span>
+                </div>
+                <div className="absolute -right-2 -bottom-2 transition-transform group-hover:scale-110">
+                  <Image
+                    src={idea.image}
+                    alt={idea.label}
+                    width={120}
+                    height={120}
+                    className="object-contain sm:h-24 sm:w-24"
+                  />
+                </div>
               </Link>
             ))}
           </div>
