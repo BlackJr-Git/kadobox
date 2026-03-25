@@ -9,11 +9,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { toast } from "sonner"
+import { useUpdateOrderStatus } from "@/hooks/use-update-order-status"
+
+type OrderStatus =
+  | "pending"
+  | "paid"
+  | "processing"
+  | "shipped"
+  | "delivered"
+  | "cancelled"
 
 interface OrderStatusUpdateProps {
   orderId: string
-  currentStatus: string
+  currentStatus: OrderStatus
 }
 
 const STATUS_OPTIONS = [
@@ -29,39 +37,27 @@ export function OrderStatusUpdate({
   orderId,
   currentStatus,
 }: OrderStatusUpdateProps) {
-  const [status, setStatus] = useState<string | null>(currentStatus)
-  const [isLoading, setIsLoading] = useState(false)
+  const [status, setStatus] = useState<OrderStatus | null>(currentStatus)
+  const updateOrderStatus = useUpdateOrderStatus()
 
-  const handleUpdate = async () => {
+  const handleUpdate = () => {
     if (!status || status === currentStatus) {
-      toast.info("Le statut n'a pas changé")
       return
     }
 
-    setIsLoading(true)
-    try {
-      const response = await fetch(`/api/orders/${orderId}/status`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ status }),
-      })
-
-      if (!response.ok) throw new Error("Erreur lors de la mise à jour")
-
-      toast.success("Statut mis à jour avec succès")
-      window.location.reload()
-    } catch (error) {
-      toast.error("Erreur lors de la mise à jour du statut")
-      setStatus(currentStatus)
-    } finally {
-      setIsLoading(false)
-    }
+    updateOrderStatus.mutate({
+      orderId,
+      status,
+    })
   }
 
   return (
     <div className="flex flex-col gap-3">
-      <Select value={status} onValueChange={setStatus}>
+      <Select
+        value={status}
+        onValueChange={setStatus}
+        disabled={updateOrderStatus.isPending}
+      >
         <SelectTrigger>
           <SelectValue />
         </SelectTrigger>
@@ -74,8 +70,14 @@ export function OrderStatusUpdate({
         </SelectContent>
       </Select>
       {status && status !== currentStatus && (
-        <Button onClick={handleUpdate} disabled={isLoading} className="w-full">
-          {isLoading ? "Mise à jour..." : "Mettre à jour le statut"}
+        <Button
+          onClick={handleUpdate}
+          disabled={updateOrderStatus.isPending}
+          className="w-full"
+        >
+          {updateOrderStatus.isPending
+            ? "Mise à jour..."
+            : "Mettre à jour le statut"}
         </Button>
       )}
     </div>

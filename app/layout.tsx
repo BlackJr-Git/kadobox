@@ -2,11 +2,15 @@ import { Geist, Geist_Mono, Manrope, Source_Sans_3 } from "next/font/google"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
-import { cn } from "@/lib/utils";
+import { QueryClientProvider } from "@/components/providers/query-client-provider"
+import { cn } from "@/lib/utils"
 
-const sourceSans3Heading = Source_Sans_3({subsets:['latin'],variable:'--font-heading'});
+const sourceSans3Heading = Source_Sans_3({
+  subsets: ["latin"],
+  variable: "--font-heading",
+})
 
-const manrope = Manrope({subsets:['latin'],variable:'--font-sans'})
+const manrope = Manrope({ subsets: ["latin"], variable: "--font-sans" })
 
 const fontMono = Geist_Mono({
   subsets: ["latin"],
@@ -22,10 +26,18 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn("antialiased", fontMono.variable, "font-sans", manrope.variable, sourceSans3Heading.variable)}
+      className={cn(
+        "antialiased",
+        fontMono.variable,
+        "font-sans",
+        manrope.variable,
+        sourceSans3Heading.variable
+      )}
     >
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <QueryClientProvider>
+          <ThemeProvider>{children}</ThemeProvider>
+        </QueryClientProvider>
       </body>
     </html>
   )

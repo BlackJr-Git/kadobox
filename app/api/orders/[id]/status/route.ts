@@ -15,9 +15,10 @@ type OrderStatus =
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const session = await auth.api.getSession({
       headers: await headers(),
     })
@@ -64,7 +65,7 @@ export async function PATCH(
       updateData.deliveredAt = new Date()
     }
 
-    await db.update(order).set(updateData).where(eq(order.id, params.id))
+    await db.update(order).set(updateData).where(eq(order.id, id))
 
     return NextResponse.json({ success: true })
   } catch (error) {

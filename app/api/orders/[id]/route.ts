@@ -7,9 +7,10 @@ import { headers } from "next/headers"
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const session = await auth.api.getSession({
       headers: await headers(),
     })
@@ -18,7 +19,7 @@ export async function DELETE(
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
     }
 
-    await db.delete(order).where(eq(order.id, params.id))
+    await db.delete(order).where(eq(order.id, id))
 
     return NextResponse.json({ success: true })
   } catch (error) {
@@ -32,9 +33,10 @@ export async function DELETE(
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const session = await auth.api.getSession({
       headers: await headers(),
     })
@@ -44,7 +46,7 @@ export async function GET(
     }
 
     const orderData = await db.query.order.findFirst({
-      where: eq(order.id, params.id),
+      where: eq(order.id, id),
       with: {
         user: true,
         shippingAddress: true,
