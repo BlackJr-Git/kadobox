@@ -8,14 +8,102 @@ import {
   ShoppingBag02Icon,
   UserIcon,
   Menu01Icon,
+  User03Icon,
+  ShoppingCart01Icon,
+  Settings01Icon,
+  Logout01Icon,
 } from "@hugeicons/core-free-icons"
 import { useState } from "react"
 import { SearchDialog } from "@/components/layout/search-dialog"
 import Logo from "../logo"
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+
+// Composant pour l'utilisateur connecté
+function NavUser({
+  user,
+}: {
+  user: { name: string; email: string; image?: string }
+}) {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger>
+        <Button variant="ghost" size="icon" className="relative rounded-full">
+          <Avatar className="size-8">
+            <AvatarImage src={user.image} alt={user.name} />
+            <AvatarFallback>{user.name.charAt(0).toUpperCase()}</AvatarFallback>
+          </Avatar>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-56">
+        <DropdownMenuGroup>
+          <DropdownMenuLabel>
+            <div className="flex flex-col">
+              <span className="font-medium">{user.name}</span>
+              <span className="text-xs text-muted-foreground">
+                {user.email}
+              </span>
+            </div>
+          </DropdownMenuLabel>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          <DropdownMenuItem render={<Link href="/compte" />}>
+            <HugeiconsIcon
+              icon={User03Icon}
+              strokeWidth={2}
+              className="mr-2 size-4"
+            />
+            Mon compte
+          </DropdownMenuItem>
+          <DropdownMenuItem render={<Link href="/compte/commandes" />}>
+            <HugeiconsIcon
+              icon={ShoppingCart01Icon}
+              strokeWidth={2}
+              className="mr-2 size-4"
+            />
+            Mes commandes
+          </DropdownMenuItem>
+          <DropdownMenuItem render={<Link href="/compte/parametres" />}>
+            <HugeiconsIcon
+              icon={Settings01Icon}
+              strokeWidth={2}
+              className="mr-2 size-4"
+            />
+            Paramètres
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          <DropdownMenuItem variant="destructive">
+            <HugeiconsIcon
+              icon={Logout01Icon}
+              strokeWidth={2}
+              className="mr-2 size-4"
+            />
+            Se déconnecter
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
 
 export function SiteNav() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const totalItems = useCartStore((s) => s.totalItems())
+
+  // Simulation utilisateur connecté (à remplacer par vraie auth)
+  const user = { name: "John Doe", email: "john@example.com", image: undefined }
+  const isLoggedIn = true // À remplacer par vrai état d'authentification
 
   return (
     <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
@@ -63,9 +151,17 @@ export function SiteNav() {
         <div className="flex items-center gap-2">
           <SearchDialog />
 
-          <Button variant="ghost" size="icon" render={<Link href="/login" />}>
-            <HugeiconsIcon icon={UserIcon} strokeWidth={2} className="size-5" />
-          </Button>
+          {isLoggedIn ? (
+            <NavUser user={user} />
+          ) : (
+            <Button variant="ghost" size="icon" render={<Link href="/login" />}>
+              <HugeiconsIcon
+                icon={UserIcon}
+                strokeWidth={2}
+                className="size-5"
+              />
+            </Button>
+          )}
 
           <Button
             variant="ghost"
