@@ -4,6 +4,9 @@ import { redirect } from "next/navigation"
 import { db } from "@/lib/db"
 import { user as userTable } from "@/lib/schema"
 import { eq } from "drizzle-orm"
+import { AppSidebar } from "@/components/app-sidebar"
+import { SiteHeader } from "@/components/site-header"
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 
 export default async function DashboardLayout({
   children,
@@ -20,5 +23,20 @@ export default async function DashboardLayout({
 
   if (dbUser?.role !== "admin") redirect("/client")
 
-  return <>{children}</>
+  return (
+    <SidebarProvider
+      style={
+        {
+          "--sidebar-width": "calc(var(--spacing) * 72)",
+          "--header-height": "calc(var(--spacing) * 12)",
+        } as React.CSSProperties
+      }
+    >
+      <AppSidebar variant="inset" />
+      <SidebarInset>
+        <SiteHeader />
+        {children}
+      </SidebarInset>
+    </SidebarProvider>
+  )
 }
