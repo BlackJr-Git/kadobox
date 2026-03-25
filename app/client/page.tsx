@@ -18,7 +18,7 @@ export default async function ClientPage() {
           Bonjour, {session.user.name} 👋
         </h1>
         <p className="mt-1 text-muted-foreground">
-          Bienvenue dans votre espace client KDOBOX.
+          Bienvenue dans votre espace client Cadeau Chrono.
         </p>
       </div>
 

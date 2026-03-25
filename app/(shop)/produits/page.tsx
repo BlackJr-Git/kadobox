@@ -6,7 +6,7 @@ import { ProductGrid } from "@/components/product/product-grid"
 import { ProductFilters } from "./product-filters"
 
 export const metadata = {
-  title: "Tous les produits | KDOBOX",
+  title: "Tous les produits | Cadeau Chrono",
   description:
     "Parcourez notre catalogue de cadeaux pour chaque occasion. Filtrez par prix, genre, occasion et catégorie.",
 }

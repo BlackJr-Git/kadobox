@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props) {
   if (!product) return { title: "Produit introuvable" }
 
   return {
-    title: `${product.name} | KDOBOX`,
+    title: `${product.name} | Cadeau Chrono`,
     description: product.shortDescription || product.description?.slice(0, 160),
   }
 }

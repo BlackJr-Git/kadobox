@@ -1,5 +1,5 @@
 const RESEND_API_KEY = process.env.RESEND_API_KEY || ""
-const FROM_EMAIL = process.env.FROM_EMAIL || "KDOBOX <noreply@cadeauchrono.com>"
+const FROM_EMAIL = process.env.FROM_EMAIL || "Cadeau Chrono <noreply@cadeauchrono.com>"
 
 type EmailOptions = {
   to: string
@@ -52,7 +52,7 @@ export async function sendOrderConfirmation({
 }) {
   return sendEmail({
     to,
-    subject: `Commande ${orderNumber} confirmée - KDOBOX`,
+    subject: `Commande ${orderNumber} confirmée - Cadeau Chrono`,
     html: `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
         <h1 style="color: #333;">Merci pour votre commande !</h1>
@@ -64,7 +64,7 @@ export async function sendOrderConfirmation({
           <p style="margin: 4px 0;"><strong>Total :</strong> ${total.toLocaleString("fr-CD")} CDF</p>
         </div>
         <p>Nous vous tiendrons informé de l'avancement de votre commande.</p>
-        <p>L'équipe KDOBOX</p>
+        <p>L'équipe Cadeau Chrono</p>
       </div>
     `,
   })
@@ -81,14 +81,14 @@ export async function sendShippingNotification({
 }) {
   return sendEmail({
     to,
-    subject: `Commande ${orderNumber} expédiée - KDOBOX`,
+    subject: `Commande ${orderNumber} expédiée - Cadeau Chrono`,
     html: `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
         <h1 style="color: #333;">Votre commande est en route !</h1>
         <p>Bonjour ${customerName},</p>
         <p>Votre commande <strong>${orderNumber}</strong> a été expédiée.</p>
         <p>Vous recevrez votre colis très bientôt.</p>
-        <p>L'équipe KDOBOX</p>
+        <p>L'équipe Cadeau Chrono</p>
       </div>
     `,
   })
@@ -103,7 +103,7 @@ export async function sendPasswordReset({
 }) {
   return sendEmail({
     to,
-    subject: "Réinitialisation de mot de passe - KDOBOX",
+    subject: "Réinitialisation de mot de passe - Cadeau Chrono",
     html: `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
         <h1 style="color: #333;">Réinitialisation de mot de passe</h1>
@@ -115,7 +115,7 @@ export async function sendPasswordReset({
           </a>
         </p>
         <p style="color: #666; font-size: 14px;">Ce lien expire dans 1 heure. Si vous n'avez pas fait cette demande, ignorez cet email.</p>
-        <p>L'équipe KDOBOX</p>
+        <p>L'équipe Cadeau Chrono</p>
       </div>
     `,
   })
@@ -136,19 +136,19 @@ export async function sendGiftCardEmail({
 }) {
   return sendEmail({
     to,
-    subject: `${senderName} vous a offert une carte cadeau KDOBOX !`,
+    subject: `${senderName} vous a offert une carte cadeau Cadeau Chrono !`,
     html: `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
         <h1 style="color: #333;">Vous avez reçu une carte cadeau !</h1>
-        <p>${senderName} vous a offert une carte cadeau KDOBOX.</p>
+        <p>${senderName} vous a offert une carte cadeau Cadeau Chrono.</p>
         ${message ? `<p style="font-style: italic; color: #555;">"${message}"</p>` : ""}
         <div style="background: linear-gradient(135deg, #e91e63, #9c27b0); color: white; padding: 24px; border-radius: 12px; text-align: center; margin: 16px 0;">
           <p style="margin: 0; font-size: 14px;">Carte cadeau KDOBOX</p>
           <p style="margin: 8px 0; font-size: 28px; font-weight: bold;">${amount.toLocaleString("fr-CD")} CDF</p>
           <p style="margin: 0; font-size: 18px; font-family: monospace; letter-spacing: 2px;">${code}</p>
         </div>
-        <p>Utilisez ce code lors du paiement sur <a href="https://kdobox.com">kdobox.com</a>.</p>
-        <p>L'équipe KDOBOX</p>
+        <p>Utilisez ce code lors du paiement sur <a href="https://cadeauchrono.com">Cadeau Chrono</a>.</p>
+        <p>L'équipe Cadeau Chrono</p>
       </div>
     `,
   })

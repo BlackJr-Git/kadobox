@@ -7,7 +7,7 @@ import { getWishlistByUser } from "@/lib/queries/wishlist"
 import { WishlistRemoveButton } from "./wishlist-remove-button"
 
 export const metadata = {
-  title: "Ma liste de souhaits | KDOBOX",
+  title: "Ma liste de souhaits | Cadeau Chrono",
   description:
     "Gérez vos produits favoris et partagez votre liste de souhaits.",
 }

@@ -27,7 +27,7 @@ export function generateProductJsonLd({
     "@context": "https://schema.org",
     "@type": "Product",
     name,
-    description: description || `${name} - Cadeau disponible sur KDOBOX`,
+    description: description || `${name} - Cadeau disponible sur Cadeau Chrono`,
     url: `${BASE_URL}/produit/${slug}`,
     offers: {
       "@type": "Offer",
@@ -39,7 +39,7 @@ export function generateProductJsonLd({
           : "https://schema.org/OutOfStock",
       seller: {
         "@type": "Organization",
-        name: "KDOBOX",
+        name: "Cadeau Chrono",
       },
     },
   }

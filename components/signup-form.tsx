@@ -77,7 +77,7 @@ export function SignupForm({
               <div className="flex flex-col items-center gap-2 text-center">
                 <h1 className="text-2xl font-bold">Créer un compte</h1>
                 <p className="text-sm text-balance text-muted-foreground">
-                  Entrez vos informations pour créer votre compte KDOBOX
+                  Entrez vos informations pour créer votre compte Cadeau Chrono
                 </p>
               </div>
               {error && (

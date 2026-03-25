@@ -135,7 +135,7 @@ export function SiteFooter() {
             </div>
           </div>
           <p className="mt-6 text-center text-xs text-muted-foreground">
-            © {new Date().getFullYear()} KDOBOX. Tous droits réservés.
+            © {new Date().getFullYear()} Cadeau Chrono. Tous droits réservés.
           </p>
         </div>
       </div>
