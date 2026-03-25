@@ -15,6 +15,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import Link from "next/link"
 import { HugeiconsIcon } from "@hugeicons/react"
 import {
   DashboardSquare01Icon,
@@ -60,7 +61,7 @@ const data = {
     },
     {
       title: "Analytics",
-      url: "/dashboard",
+      url: "/dashboard/analytics",
       icon: <HugeiconsIcon icon={ChartHistogramIcon} strokeWidth={2} />,
     },
   ],
@@ -115,34 +116,34 @@ const data = {
   navSecondary: [
     {
       title: "Settings",
-      url: "#",
+      url: "/dashboard/settings",
       icon: <HugeiconsIcon icon={Settings05Icon} strokeWidth={2} />,
     },
     {
       title: "Get Help",
-      url: "#",
+      url: "/help",
       icon: <HugeiconsIcon icon={HelpCircleIcon} strokeWidth={2} />,
     },
     {
       title: "Search",
-      url: "#",
+      url: "/search",
       icon: <HugeiconsIcon icon={SearchIcon} strokeWidth={2} />,
     },
   ],
   documents: [
     {
       name: "Data Library",
-      url: "#",
+      url: "/dashboard/data",
       icon: <HugeiconsIcon icon={Database01Icon} strokeWidth={2} />,
     },
     {
       name: "Reports",
-      url: "#",
+      url: "/dashboard/reports",
       icon: <HugeiconsIcon icon={Analytics01Icon} strokeWidth={2} />,
     },
     {
       name: "Word Assistant",
-      url: "#",
+      url: "/dashboard/assistant",
       icon: <HugeiconsIcon icon={File01Icon} strokeWidth={2} />,
     },
   ],
@@ -155,7 +156,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton
               className="data-[slot=sidebar-menu-button]:p-1.5!"
-              render={<a href="#" />}
+              render={<Link href="/dashboard" />}
             >
               <HugeiconsIcon
                 icon={CommandIcon}

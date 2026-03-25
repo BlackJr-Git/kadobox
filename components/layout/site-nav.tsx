@@ -12,6 +12,7 @@ import {
   ShoppingCart01Icon,
   Settings01Icon,
   Logout01Icon,
+  DashboardSquare01Icon,
 } from "@hugeicons/core-free-icons"
 import { useState } from "react"
 import { SearchDialog } from "@/components/layout/search-dialog"
@@ -33,7 +34,7 @@ import { usePathname } from "next/navigation"
 function NavUser({
   user,
 }: {
-  user: { name: string; email: string; image?: string | null }
+  user: { name: string; email: string; image?: string | null; role?: string }
 }) {
   const handleLogout = async () => {
     await signOut()
@@ -86,6 +87,17 @@ function NavUser({
             />
             Paramètres
           </DropdownMenuItem>
+          {/* Lien Dashboard uniquement pour les admins */}
+          {user.role === "admin" && (
+            <DropdownMenuItem render={<Link href="/dashboard" />}>
+              <HugeiconsIcon
+                icon={DashboardSquare01Icon}
+                strokeWidth={2}
+                className="mr-2 size-4"
+              />
+              Dashboard Admin
+            </DropdownMenuItem>
+          )}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>

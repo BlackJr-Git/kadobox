@@ -8,6 +8,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import Link from "next/link"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { PlusSignCircleIcon, Mail01Icon } from "@hugeicons/core-free-icons"
 
@@ -45,7 +46,10 @@ export function NavMain({
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton tooltip={item.title}>
+              <SidebarMenuButton
+                tooltip={item.title}
+                render={<Link href={item.url} />}
+              >
                 {item.icon}
                 <span>{item.title}</span>
               </SidebarMenuButton>

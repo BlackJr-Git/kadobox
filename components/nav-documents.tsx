@@ -16,8 +16,14 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
+import Link from "next/link"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { MoreHorizontalCircle01Icon, Folder01Icon, Share01Icon, Delete02Icon } from "@hugeicons/core-free-icons"
+import {
+  MoreHorizontalCircle01Icon,
+  Folder01Icon,
+  Share01Icon,
+  Delete02Icon,
+} from "@hugeicons/core-free-icons"
 
 export function NavDocuments({
   items,
@@ -35,7 +41,7 @@ export function NavDocuments({
       <SidebarMenu>
         {items.map((item) => (
           <SidebarMenuItem key={item.name}>
-            <SidebarMenuButton render={<a href={item.url} />}>
+            <SidebarMenuButton render={<Link href={item.url} />}>
               {item.icon}
               <span>{item.name}</span>
             </SidebarMenuButton>
@@ -48,7 +54,10 @@ export function NavDocuments({
                   />
                 }
               >
-                <HugeiconsIcon icon={MoreHorizontalCircle01Icon} strokeWidth={2} />
+                <HugeiconsIcon
+                  icon={MoreHorizontalCircle01Icon}
+                  strokeWidth={2}
+                />
                 <span className="sr-only">More</span>
               </DropdownMenuTrigger>
               <DropdownMenuContent
@@ -75,7 +84,11 @@ export function NavDocuments({
         ))}
         <SidebarMenuItem>
           <SidebarMenuButton className="text-sidebar-foreground/70">
-            <HugeiconsIcon icon={MoreHorizontalCircle01Icon} strokeWidth={2} className="text-sidebar-foreground/70" />
+            <HugeiconsIcon
+              icon={MoreHorizontalCircle01Icon}
+              strokeWidth={2}
+              className="text-sidebar-foreground/70"
+            />
             <span>More</span>
           </SidebarMenuButton>
         </SidebarMenuItem>
