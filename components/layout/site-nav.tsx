@@ -23,7 +23,7 @@ export function SiteNav() {
         <div className="flex items-center gap-6">
           {/* <Link href="/" className="text-xl font-bold tracking-tight"> */}
           {/* <span className="text-primary">KDOB</span>OX */}
-          <Logo className="h-12 w-12" />
+          <Logo className="h-12 w-auto" />
           {/* </Link> */}
 
           <nav className="hidden items-center gap-5 text-sm md:flex">
