@@ -1,9 +1,10 @@
 import { eq, and } from "drizzle-orm"
 import { db } from "@/lib/db"
 import { wishlist, wishlistItem } from "@/lib/schema"
+import { serializeData } from "@/lib/serialize"
 
 export async function getWishlistByUser(userId: string) {
-  return db.query.wishlist.findFirst({
+  const result = await db.query.wishlist.findFirst({
     where: eq(wishlist.userId, userId),
     with: {
       items: {
@@ -15,6 +16,7 @@ export async function getWishlistByUser(userId: string) {
       },
     },
   })
+  return serializeData(result)
 }
 
 export async function getOrCreateWishlist(userId: string) {
@@ -22,7 +24,7 @@ export async function getOrCreateWishlist(userId: string) {
     where: eq(wishlist.userId, userId),
   })
 
-  if (existing) return existing
+  if (existing) return serializeData(existing)
 
   const [created] = await db
     .insert(wishlist)
@@ -32,7 +34,7 @@ export async function getOrCreateWishlist(userId: string) {
     })
     .returning()
 
-  return created
+  return serializeData(created)
 }
 
 export async function addToWishlist(userId: string, productId: string) {
@@ -45,7 +47,7 @@ export async function addToWishlist(userId: string, productId: string) {
     ),
   })
 
-  if (existing) return existing
+  if (existing) return serializeData(existing)
 
   const [item] = await db
     .insert(wishlistItem)
@@ -56,7 +58,7 @@ export async function addToWishlist(userId: string, productId: string) {
     })
     .returning()
 
-  return item
+  return serializeData(item)
 }
 
 export async function removeFromWishlist(userId: string, productId: string) {

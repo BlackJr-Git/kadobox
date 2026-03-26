@@ -6,12 +6,15 @@ import { Button } from "@/components/ui/button"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { Download04Icon, PlusSignIcon } from "@hugeicons/core-free-icons"
 import Link from "next/link"
+import { serializeData } from "@/lib/serialize"
 
 export default async function DashboardCommandesPage() {
-  const orders = await db.query.order.findMany({
-    with: { user: true, items: true },
-    orderBy: [desc(order.createdAt)],
-  })
+  const orders = serializeData(
+    await db.query.order.findMany({
+      with: { user: true, items: true },
+      orderBy: [desc(order.createdAt)],
+    })
+  )
 
   return (
     <div className="flex flex-col gap-6 p-6">

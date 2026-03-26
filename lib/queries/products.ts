@@ -1,19 +1,21 @@
 import { eq, desc, and, gte, lte } from "drizzle-orm"
 import { db } from "@/lib/db"
 import { product } from "@/lib/schema"
+import { serializeData } from "@/lib/serialize"
 
 export async function getFeaturedProducts() {
-  return db.query.product.findMany({
+  const result = await db.query.product.findMany({
     where: and(eq(product.isActive, true), eq(product.isFeatured, true)),
     with: {
       images: true,
     },
     limit: 8,
   })
+  return serializeData(result)
 }
 
 export async function getProductBySlug(slug: string) {
-  return db.query.product.findFirst({
+  const result = await db.query.product.findFirst({
     where: eq(product.slug, slug),
     with: {
       images: true,
@@ -28,6 +30,7 @@ export async function getProductBySlug(slug: string) {
       },
     },
   })
+  return serializeData(result)
 }
 
 export async function getProducts({
@@ -57,7 +60,7 @@ export async function getProducts({
     )
   }
 
-  return db.query.product.findMany({
+  const result = await db.query.product.findMany({
     where: and(...conditions),
     with: {
       images: true,
@@ -66,10 +69,11 @@ export async function getProducts({
     offset,
     orderBy: [desc(product.createdAt)],
   })
+  return serializeData(result)
 }
 
 export async function getLatestProducts(limit = 8) {
-  return db.query.product.findMany({
+  const result = await db.query.product.findMany({
     where: eq(product.isActive, true),
     with: {
       images: true,
@@ -77,4 +81,5 @@ export async function getLatestProducts(limit = 8) {
     limit,
     orderBy: [desc(product.createdAt)],
   })
+  return serializeData(result)
 }

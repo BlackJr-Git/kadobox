@@ -1,9 +1,10 @@
 import { eq, desc } from "drizzle-orm"
 import { db } from "@/lib/db"
 import { order } from "@/lib/schema"
+import { serializeData } from "@/lib/serialize"
 
 export async function getOrdersByUser(userId: string) {
-  return db.query.order.findMany({
+  const result = await db.query.order.findMany({
     where: eq(order.userId, userId),
     with: {
       items: {
@@ -18,10 +19,11 @@ export async function getOrdersByUser(userId: string) {
     },
     orderBy: [desc(order.createdAt)],
   })
+  return serializeData(result)
 }
 
 export async function getOrderById(orderId: string) {
-  return db.query.order.findFirst({
+  const result = await db.query.order.findFirst({
     where: eq(order.id, orderId),
     with: {
       items: {
@@ -36,10 +38,11 @@ export async function getOrderById(orderId: string) {
       user: true,
     },
   })
+  return serializeData(result)
 }
 
 export async function getOrderByNumber(orderNumber: string) {
-  return db.query.order.findFirst({
+  const result = await db.query.order.findFirst({
     where: eq(order.orderNumber, orderNumber),
     with: {
       items: {
@@ -53,6 +56,7 @@ export async function getOrderByNumber(orderNumber: string) {
       shippingAddress: true,
     },
   })
+  return serializeData(result)
 }
 
 export function generateOrderNumber() {

@@ -1,18 +1,21 @@
 import { eq, asc } from "drizzle-orm"
 import { db } from "@/lib/db"
 import { occasion, productOccasion } from "@/lib/schema"
+import { serializeData } from "@/lib/serialize"
 
 export async function getOccasions() {
-  return db.query.occasion.findMany({
+  const result = await db.query.occasion.findMany({
     where: eq(occasion.isActive, true),
     orderBy: [asc(occasion.sortOrder)],
   })
+  return serializeData(result)
 }
 
 export async function getOccasionBySlug(slug: string) {
-  return db.query.occasion.findFirst({
+  const result = await db.query.occasion.findFirst({
     where: eq(occasion.slug, slug),
   })
+  return serializeData(result)
 }
 
 export async function getProductsByOccasion(occasionId: string) {
@@ -27,5 +30,5 @@ export async function getProductsByOccasion(occasionId: string) {
     },
   })
 
-  return results.map((r) => r.product).filter((p) => p.isActive)
+  return serializeData(results.map((r) => r.product).filter((p) => p.isActive))
 }

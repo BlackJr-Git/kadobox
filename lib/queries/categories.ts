@@ -1,18 +1,21 @@
 import { eq, asc } from "drizzle-orm"
 import { db } from "@/lib/db"
 import { category, productCategory } from "@/lib/schema"
+import { serializeData } from "@/lib/serialize"
 
 export async function getCategories() {
-  return db.query.category.findMany({
+  const result = await db.query.category.findMany({
     where: eq(category.isActive, true),
     orderBy: [asc(category.sortOrder)],
   })
+  return serializeData(result)
 }
 
 export async function getCategoryBySlug(slug: string) {
-  return db.query.category.findFirst({
+  const result = await db.query.category.findFirst({
     where: eq(category.slug, slug),
   })
+  return serializeData(result)
 }
 
 export async function getProductsByCategory(categoryId: string) {
@@ -27,7 +30,5 @@ export async function getProductsByCategory(categoryId: string) {
     },
   })
 
-  return results
-    .map((r) => r.product)
-    .filter((p) => p.isActive)
+  return serializeData(results.map((r) => r.product).filter((p) => p.isActive))
 }

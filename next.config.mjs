@@ -7,6 +7,11 @@ const nextConfig = {
         hostname: "image2url.com",
         pathname: "/r2/default/images/**",
       },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        pathname: "/**",
+      },
     ],
   },
 }

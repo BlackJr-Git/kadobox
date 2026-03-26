@@ -1,9 +1,10 @@
 import { eq } from "drizzle-orm"
 import { db } from "@/lib/db"
 import { bundle } from "@/lib/schema"
+import { serializeData } from "@/lib/serialize"
 
 export async function getBundles() {
-  return db.query.bundle.findMany({
+  const result = await db.query.bundle.findMany({
     where: eq(bundle.isActive, true),
     with: {
       bundleProducts: {
@@ -17,10 +18,11 @@ export async function getBundles() {
       },
     },
   })
+  return serializeData(result)
 }
 
 export async function getBundleBySlug(slug: string) {
-  return db.query.bundle.findFirst({
+  const result = await db.query.bundle.findFirst({
     where: eq(bundle.slug, slug),
     with: {
       bundleProducts: {
@@ -34,4 +36,5 @@ export async function getBundleBySlug(slug: string) {
       },
     },
   })
+  return serializeData(result)
 }
