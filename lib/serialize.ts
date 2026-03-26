@@ -4,7 +4,7 @@ export function serializeData<T>(data: T): T {
   }
 
   if (data instanceof Date) {
-    return data as T
+    return data.toISOString() as T
   }
 
   if (typeof data === "object") {

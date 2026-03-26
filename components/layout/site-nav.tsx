@@ -13,6 +13,7 @@ import {
   Settings01Icon,
   Logout01Icon,
   DashboardSquare01Icon,
+  FavouriteIcon,
 } from "@hugeicons/core-free-icons"
 import { useState } from "react"
 import { SearchDialog } from "@/components/layout/search-dialog"
@@ -78,6 +79,14 @@ function NavUser({
               className="mr-2 size-4"
             />
             Mes commandes
+          </DropdownMenuItem>
+          <DropdownMenuItem render={<Link href="/client/liste-souhaits" />}>
+            <HugeiconsIcon
+              icon={FavouriteIcon}
+              strokeWidth={2}
+              className="mr-2 size-4"
+            />
+            Ma liste de souhaits
           </DropdownMenuItem>
           <DropdownMenuItem render={<Link href="/client/profil" />}>
             <HugeiconsIcon
@@ -197,6 +206,18 @@ export function SiteNav() {
               />
             </Button>
           )}
+
+          <Button
+            variant="ghost"
+            size="icon"
+            render={<Link href="/client/liste-souhaits" />}
+          >
+            <HugeiconsIcon
+              icon={FavouriteIcon}
+              strokeWidth={2}
+              className="size-5"
+            />
+          </Button>
 
           <Button
             variant="ghost"
