@@ -3,12 +3,7 @@
 import { useOrderDetail } from "@/hooks/use-order-detail"
 import { OrderStatusUpdate } from "./order-status-update"
 import { OrderStatusBadge } from "./order-status-badge"
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -23,6 +18,14 @@ import {
   CreditCardIcon,
 } from "@hugeicons/core-free-icons"
 import Link from "next/link"
+
+type OrderStatus =
+  | "pending"
+  | "paid"
+  | "processing"
+  | "shipped"
+  | "delivered"
+  | "cancelled"
 
 interface OrderDetailClientProps {
   orderId: string
@@ -43,7 +46,11 @@ export function OrderDetailClient({ orderId }: OrderDetailClientProps) {
     <div className="flex flex-col gap-6 p-6">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div className="flex items-center gap-4">
-          <Button variant="outline" size="icon" render={<Link href="/dashboard/commandes" />}>
+          <Button
+            variant="outline"
+            size="icon"
+            render={<Link href="/dashboard/commandes" />}
+          >
             <HugeiconsIcon icon={ArrowLeft01Icon} />
           </Button>
           <div>
@@ -71,13 +78,14 @@ export function OrderDetailClient({ orderId }: OrderDetailClientProps) {
       </div>
 
       <div className="grid gap-6 md:grid-cols-3">
-        <div className="md:col-span-2 flex flex-col gap-6">
+        <div className="flex flex-col gap-6 md:col-span-2">
           <Card>
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle>Articles commandés</CardTitle>
                 <Badge variant="secondary">
-                  {orderData.items.length} article{orderData.items.length > 1 ? "s" : ""}
+                  {orderData.items.length} article
+                  {orderData.items.length > 1 ? "s" : ""}
                 </Badge>
               </div>
             </CardHeader>
@@ -116,10 +124,12 @@ export function OrderDetailClient({ orderId }: OrderDetailClientProps) {
                         </div>
                         <div className="text-right">
                           <p className="font-medium">
-                            {Number(item.totalPrice).toLocaleString("fr-CD")} CDF
+                            {Number(item.totalPrice).toLocaleString("fr-CD")}{" "}
+                            CDF
                           </p>
                           <p className="text-sm text-muted-foreground">
-                            {Number(item.unitPrice).toLocaleString("fr-CD")} CDF / unité
+                            {Number(item.unitPrice).toLocaleString("fr-CD")} CDF
+                            / unité
                           </p>
                         </div>
                       </div>
@@ -155,7 +165,9 @@ export function OrderDetailClient({ orderId }: OrderDetailClientProps) {
                   </span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Frais de livraison</span>
+                  <span className="text-muted-foreground">
+                    Frais de livraison
+                  </span>
                   <span>
                     {Number(orderData.shippingCost).toLocaleString("fr-CD")} CDF
                   </span>
@@ -197,7 +209,7 @@ export function OrderDetailClient({ orderId }: OrderDetailClientProps) {
               </div>
               <OrderStatusUpdate
                 orderId={orderData.id}
-                currentStatus={orderData.status}
+                currentStatus={orderData.status as OrderStatus}
               />
               <Separator />
               <div className="flex flex-col gap-3 text-sm">
@@ -224,7 +236,9 @@ export function OrderDetailClient({ orderId }: OrderDetailClientProps) {
                     <div>
                       <p className="font-medium">Expédiée le</p>
                       <p className="text-muted-foreground">
-                        {new Date(orderData.shippedAt).toLocaleDateString("fr-FR")}
+                        {new Date(orderData.shippedAt).toLocaleDateString(
+                          "fr-FR"
+                        )}
                       </p>
                     </div>
                   </div>
@@ -238,7 +252,9 @@ export function OrderDetailClient({ orderId }: OrderDetailClientProps) {
                     <div>
                       <p className="font-medium">Livrée le</p>
                       <p className="text-muted-foreground">
-                        {new Date(orderData.deliveredAt).toLocaleDateString("fr-FR")}
+                        {new Date(orderData.deliveredAt).toLocaleDateString(
+                          "fr-FR"
+                        )}
                       </p>
                     </div>
                   </div>
