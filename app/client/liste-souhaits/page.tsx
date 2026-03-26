@@ -137,12 +137,14 @@ export default function WishlistPage() {
   const items = wishlist?.items || []
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8">
-      <div className="mb-8 flex items-center justify-between">
+    <div className="space-y-6 pb-20 md:pb-8">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Ma liste de souhaits</h1>
+          <h1 className="text-3xl font-bold tracking-tight">
+            Ma liste de souhaits
+          </h1>
           <p className="mt-2 text-muted-foreground">
-            {items.length} produit{items.length > 1 ? "s" : ""}
+            {items.length} produit{items.length > 1 ? "s" : ""} dans votre liste
           </p>
         </div>
 
@@ -150,13 +152,13 @@ export default function WishlistPage() {
           <Dialog open={shareDialogOpen} onOpenChange={setShareDialogOpen}>
             <DialogTrigger
               render={
-                <Button onClick={generateShareLink} variant="outline">
+                <Button onClick={generateShareLink} variant="outline" size="lg">
                   <HugeiconsIcon
                     icon={Share08Icon}
-                    className="mr-2 h-4 w-4"
+                    className="mr-2 h-5 w-5"
                     strokeWidth={2}
                   />
-                  Partager ma liste
+                  Partager
                 </Button>
               }
             />
@@ -190,20 +192,30 @@ export default function WishlistPage() {
       </div>
 
       {items.length === 0 ? (
-        <div className="rounded-lg border bg-muted/30 p-12 text-center">
-          <p className="mb-4 text-lg text-muted-foreground">
+        <div className="rounded-xl border bg-card p-12 text-center">
+          <div className="mx-auto mb-6 w-fit rounded-full bg-rose-500/10 p-6">
+            <HugeiconsIcon
+              icon={FavouriteIcon}
+              className="h-12 w-12 text-rose-600"
+              strokeWidth={2}
+            />
+          </div>
+          <h2 className="mb-2 text-xl font-bold">
             Votre liste de souhaits est vide
+          </h2>
+          <p className="mb-6 text-muted-foreground">
+            Ajoutez des produits à votre liste pour les retrouver facilement
           </p>
-          <Button render={<Link href="/produits" />}>
+          <Button size="lg" render={<Link href="/produits" />}>
             Découvrir nos produits
           </Button>
         </div>
       ) : (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((item) => (
             <div
               key={item.id}
-              className="group overflow-hidden rounded-lg border bg-card transition-shadow hover:shadow-lg"
+              className="group overflow-hidden rounded-xl border bg-card transition-all hover:shadow-lg"
             >
               <Link
                 href={`/produit/${item.product.slug}`}
@@ -214,24 +226,25 @@ export default function WishlistPage() {
                     src={item.product.images[0].url}
                     alt={item.product.name}
                     fill
-                    className="object-cover transition-transform group-hover:scale-105"
+                    className="object-cover transition-transform duration-300 group-hover:scale-110"
                   />
                 )}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
               </Link>
 
-              <div className="p-4">
+              <div className="p-5">
                 <Link href={`/produit/${item.product.slug}`}>
-                  <h3 className="mb-2 font-semibold transition-colors hover:text-primary">
+                  <h3 className="mb-2 line-clamp-2 font-semibold transition-colors hover:text-primary">
                     {item.product.name}
                   </h3>
                 </Link>
-                <p className="mb-4 text-lg font-bold">
+                <p className="mb-4 text-xl font-bold">
                   {Number(item.product.price).toLocaleString("fr-CD")} CDF
                 </p>
 
                 <div className="flex gap-2">
                   <Button
-                    variant="outline"
+                    variant="default"
                     size="sm"
                     className="flex-1"
                     render={<Link href={`/produit/${item.product.slug}`} />}
@@ -241,12 +254,13 @@ export default function WishlistPage() {
                       className="mr-2 h-4 w-4"
                       strokeWidth={2}
                     />
-                    Ajouter au panier
+                    Voir
                   </Button>
                   <Button
-                    variant="ghost"
+                    variant="outline"
                     size="icon"
                     onClick={() => removeFromWishlist(item.product.id)}
+                    className="shrink-0"
                   >
                     <HugeiconsIcon
                       icon={Delete02Icon}

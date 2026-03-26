@@ -1,10 +1,10 @@
-import Link from "next/link"
 import { auth } from "@/lib/auth"
 import { headers } from "next/headers"
 import { redirect } from "next/navigation"
 import { db } from "@/lib/db"
 import { user as userTable } from "@/lib/schema"
 import { eq } from "drizzle-orm"
+import { ClientNav } from "@/components/client/client-nav"
 
 export default async function ClientLayout({
   children,
@@ -22,51 +22,11 @@ export default async function ClientLayout({
   if (dbUser?.role === "admin") redirect("/dashboard")
 
   return (
-    <div className="flex min-h-svh">
-      <aside className="hidden w-56 shrink-0 border-r bg-muted/30 md:block">
-        <div className="p-4">
-          <Link href="/" className="text-lg font-bold tracking-tight">
-            <span className="text-primary">KDOB</span>OX
-          </Link>
-        </div>
-        <nav className="flex flex-col gap-1 px-2">
-          <Link
-            href="/client"
-            className="rounded-md px-3 py-2 text-sm font-medium hover:bg-muted"
-          >
-            Mon compte
-          </Link>
-          <Link
-            href="/client/commandes"
-            className="rounded-md px-3 py-2 text-sm font-medium hover:bg-muted"
-          >
-            Mes commandes
-          </Link>
-          <Link
-            href="/client/profil"
-            className="rounded-md px-3 py-2 text-sm font-medium hover:bg-muted"
-          >
-            Mon profil
-          </Link>
-          <Link
-            href="/client/cartes-cadeaux"
-            className="rounded-md px-3 py-2 text-sm font-medium hover:bg-muted"
-          >
-            Cartes cadeaux
-          </Link>
-          <Link
-            href="/wishlist"
-            className="rounded-md px-3 py-2 text-sm font-medium hover:bg-muted"
-          >
-            Liste de souhaits
-          </Link>
-        </nav>
-        <div className="mt-auto border-t p-4">
-          <p className="truncate text-sm font-medium">{session.user.name}</p>
-          <p className="truncate text-xs text-muted-foreground">{session.user.email}</p>
-        </div>
-      </aside>
-      <main className="flex-1 p-6">{children}</main>
+    <div className="flex min-h-svh flex-col md:flex-row">
+      <ClientNav user={session.user} />
+      <main className="flex-1 bg-gradient-to-br from-background via-background to-muted/20">
+        <div className="mx-auto max-w-7xl p-4 md:p-8">{children}</div>
+      </main>
     </div>
   )
 }
