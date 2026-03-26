@@ -9,7 +9,7 @@ export default async function DashboardClientsPage() {
   })
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 p-6">
       <h1 className="text-2xl font-bold">Clients ({users.length})</h1>
 
       {users.length === 0 ? (

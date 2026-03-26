@@ -1,6 +1,6 @@
 import { db } from "@/lib/db"
 import { order, product, user } from "@/lib/schema"
-import { eq, sql } from "drizzle-orm"
+import { eq, sql, inArray } from "drizzle-orm"
 import { Badge } from "@/components/ui/badge"
 import {
   Card,
@@ -20,7 +20,9 @@ export async function DashboardStats() {
       db
         .select({ total: sql<string>`coalesce(sum(${order.total}), '0')` })
         .from(order)
-        .where(eq(order.status, "paid")),
+        .where(
+          inArray(order.status, ["paid", "processing", "shipped", "delivered"])
+        ),
       db
         .select({ count: sql<number>`count(*)` })
         .from(product)
