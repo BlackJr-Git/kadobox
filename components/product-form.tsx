@@ -16,7 +16,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox"
 import { toast } from "sonner"
 import Image from "next/image"
-import { Loader2, X } from "lucide-react"
+import { Loader2, X, Upload, Package, Tag, Calendar } from "lucide-react"
 
 type Category = {
   id: string
@@ -162,36 +162,59 @@ export function ProductForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="grid gap-6 md:grid-cols-2">
-        <div className="space-y-4">
+    <form onSubmit={handleSubmit} className="mx-auto max-w-5xl space-y-8">
+      {/* Informations principales */}
+      <div className="space-y-6 rounded-xl border bg-card p-6">
+        <div className="flex items-center gap-3 border-b pb-4">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+            <Package className="h-5 w-5 text-primary" />
+          </div>
           <div>
-            <Label htmlFor="name">Nom du produit *</Label>
+            <h2 className="text-lg font-semibold">Informations du produit</h2>
+            <p className="text-sm text-muted-foreground">
+              Détails essentiels du produit
+            </p>
+          </div>
+        </div>
+
+        <div className="space-y-5">
+          <div className="space-y-2">
+            <Label htmlFor="name" className="text-sm font-medium">
+              Nom du produit <span className="text-destructive">*</span>
+            </Label>
             <Input
               id="name"
               value={formData.name}
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
               }
+              placeholder="Ex: Montre élégante pour homme"
+              className="h-11"
               required
             />
           </div>
 
-          <div>
-            <Label htmlFor="description">Description</Label>
+          <div className="space-y-2">
+            <Label htmlFor="description" className="text-sm font-medium">
+              Description
+            </Label>
             <Textarea
               id="description"
               value={formData.description}
               onChange={(e) =>
                 setFormData({ ...formData, description: e.target.value })
               }
+              placeholder="Décrivez le produit, ses caractéristiques et ce qui le rend spécial..."
               rows={4}
+              className="resize-none"
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="price">Prix (CDF) *</Label>
+          <div className="grid gap-4 sm:grid-cols-3">
+            <div className="space-y-2">
+              <Label htmlFor="price" className="text-sm font-medium">
+                Prix (CDF) <span className="text-destructive">*</span>
+              </Label>
               <Input
                 id="price"
                 type="number"
@@ -199,12 +222,16 @@ export function ProductForm({
                 onChange={(e) =>
                   setFormData({ ...formData, price: Number(e.target.value) })
                 }
+                placeholder="0"
+                className="h-11"
                 required
               />
             </div>
 
-            <div>
-              <Label htmlFor="stock">Stock *</Label>
+            <div className="space-y-2">
+              <Label htmlFor="stock" className="text-sm font-medium">
+                Stock <span className="text-destructive">*</span>
+              </Label>
               <Input
                 id="stock"
                 type="number"
@@ -212,40 +239,44 @@ export function ProductForm({
                 onChange={(e) =>
                   setFormData({ ...formData, stock: Number(e.target.value) })
                 }
+                placeholder="0"
+                className="h-11"
                 required
               />
             </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="gender" className="text-sm font-medium">
+                Genre <span className="text-destructive">*</span>
+              </Label>
+              <Select
+                value={formData.gender}
+                onValueChange={(value) => {
+                  if (
+                    value &&
+                    (value === "homme" ||
+                      value === "femme" ||
+                      value === "unisexe" ||
+                      value === "enfant")
+                  ) {
+                    setFormData({ ...formData, gender: value })
+                  }
+                }}
+              >
+                <SelectTrigger className="h-11">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="homme">Homme</SelectItem>
+                  <SelectItem value="femme">Femme</SelectItem>
+                  <SelectItem value="unisexe">Unisexe</SelectItem>
+                  <SelectItem value="enfant">Enfant</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
-          <div>
-            <Label htmlFor="gender">Genre *</Label>
-            <Select
-              value={formData.gender}
-              onValueChange={(value) => {
-                if (
-                  value &&
-                  (value === "homme" ||
-                    value === "femme" ||
-                    value === "unisexe" ||
-                    value === "enfant")
-                ) {
-                  setFormData({ ...formData, gender: value })
-                }
-              }}
-            >
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="homme">Homme</SelectItem>
-                <SelectItem value="femme">Femme</SelectItem>
-                <SelectItem value="unisexe">Unisexe</SelectItem>
-                <SelectItem value="enfant">Enfant</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center gap-3 rounded-lg border bg-muted/30 p-4">
             <Checkbox
               id="isActive"
               checked={formData.isActive}
@@ -253,110 +284,182 @@ export function ProductForm({
                 setFormData({ ...formData, isActive: checked as boolean })
               }
             />
-            <Label htmlFor="isActive" className="cursor-pointer">
-              Produit actif
-            </Label>
-          </div>
-        </div>
-
-        <div className="space-y-4">
-          <div>
-            <Label>Images</Label>
-            <div className="mt-2 space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                {formData.images.map((image, index) => (
-                  <div key={index} className="relative aspect-square">
-                    <Image
-                      src={image.url}
-                      alt={image.altText || "Product"}
-                      fill
-                      className="rounded-lg object-cover"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => removeImage(index)}
-                      className="text-destructive-foreground absolute top-2 right-2 rounded-full bg-destructive p-1"
-                    >
-                      <X className="h-4 w-4" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-
-              <div>
-                <Input
-                  type="file"
-                  accept="image/*"
-                  multiple
-                  onChange={handleImageUpload}
-                  disabled={uploading}
-                  className="cursor-pointer"
-                />
-                {uploading && (
-                  <p className="mt-2 text-sm text-muted-foreground">
-                    Upload en cours...
-                  </p>
-                )}
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <Label>Catégories</Label>
-            <div className="mt-2 space-y-2">
-              {categories.map((category) => (
-                <div key={category.id} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={`category-${category.id}`}
-                    checked={formData.categoryIds.includes(category.id)}
-                    onCheckedChange={() => toggleCategory(category.id)}
-                  />
-                  <Label
-                    htmlFor={`category-${category.id}`}
-                    className="cursor-pointer"
-                  >
-                    {category.name}
-                  </Label>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <Label>Occasions</Label>
-            <div className="mt-2 space-y-2">
-              {occasions.map((occasion) => (
-                <div key={occasion.id} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={`occasion-${occasion.id}`}
-                    checked={formData.occasionIds.includes(occasion.id)}
-                    onCheckedChange={() => toggleOccasion(occasion.id)}
-                  />
-                  <Label
-                    htmlFor={`occasion-${occasion.id}`}
-                    className="cursor-pointer"
-                  >
-                    {occasion.name}
-                  </Label>
-                </div>
-              ))}
+            <div className="flex-1">
+              <Label htmlFor="isActive" className="cursor-pointer font-medium">
+                Produit actif
+              </Label>
+              <p className="text-sm text-muted-foreground">
+                Le produit sera visible sur la boutique
+              </p>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="flex gap-4">
-        <Button type="submit" disabled={loading || uploading}>
-          {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          {product?.id ? "Mettre à jour" : "Créer le produit"}
-        </Button>
+      {/* Images */}
+      <div className="space-y-6 rounded-xl border bg-card p-6">
+        <div className="flex items-center gap-3 border-b pb-4">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+            <Upload className="h-5 w-5 text-primary" />
+          </div>
+          <div>
+            <h2 className="text-lg font-semibold">Images du produit</h2>
+            <p className="text-sm text-muted-foreground">
+              {formData.images.length > 0
+                ? `${formData.images.length} image${formData.images.length > 1 ? "s" : ""} ajoutée${formData.images.length > 1 ? "s" : ""}`
+                : "Ajoutez des images de qualité"}
+            </p>
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          {formData.images.length > 0 && (
+            <div className="grid gap-4 sm:grid-cols-3">
+              {formData.images.map((image, index) => (
+                <div
+                  key={index}
+                  className="group relative aspect-square overflow-hidden rounded-lg border bg-muted"
+                >
+                  <Image
+                    src={image.url}
+                    alt={image.altText || "Product"}
+                    fill
+                    className="object-cover transition-transform group-hover:scale-105"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removeImage(index)}
+                    className="text-destructive-foreground absolute top-2 right-2 rounded-full bg-destructive p-1.5 opacity-0 shadow-lg transition-opacity group-hover:opacity-100"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                  {index === 0 && (
+                    <div className="absolute bottom-2 left-2 rounded bg-primary px-2 py-1 text-xs font-medium text-primary-foreground">
+                      Principal
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+
+          <label
+            htmlFor="image-upload"
+            className="flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-muted-foreground/25 bg-muted/30 p-8 transition-colors hover:border-muted-foreground/50 hover:bg-muted/50"
+          >
+            <Upload className="mb-3 h-10 w-10 text-muted-foreground" />
+            <p className="mb-1 text-sm font-medium">
+              {uploading
+                ? "Upload en cours..."
+                : "Cliquez pour ajouter des images"}
+            </p>
+            <p className="text-xs text-muted-foreground">
+              PNG, JPG ou WEBP (max. 5MB)
+            </p>
+            <Input
+              id="image-upload"
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={handleImageUpload}
+              disabled={uploading}
+              className="hidden"
+            />
+          </label>
+        </div>
+      </div>
+
+      {/* Catégories et Occasions */}
+      <div className="grid gap-6 lg:grid-cols-2">
+        <div className="space-y-6 rounded-xl border bg-card p-6">
+          <div className="flex items-center gap-3 border-b pb-4">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+              <Tag className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <h2 className="text-lg font-semibold">Catégories</h2>
+              <p className="text-sm text-muted-foreground">
+                {formData.categoryIds.length > 0
+                  ? `${formData.categoryIds.length} sélectionnée${formData.categoryIds.length > 1 ? "s" : ""}`
+                  : "Aucune catégorie"}
+              </p>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            {categories.map((category) => (
+              <label
+                key={category.id}
+                htmlFor={`category-${category.id}`}
+                className="flex cursor-pointer items-center gap-3 rounded-lg border bg-muted/30 p-3 transition-colors hover:bg-muted/50"
+              >
+                <Checkbox
+                  id={`category-${category.id}`}
+                  checked={formData.categoryIds.includes(category.id)}
+                  onCheckedChange={() => toggleCategory(category.id)}
+                />
+                <span className="flex-1 text-sm font-medium">
+                  {category.name}
+                </span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <div className="space-y-6 rounded-xl border bg-card p-6">
+          <div className="flex items-center gap-3 border-b pb-4">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+              <Calendar className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <h2 className="text-lg font-semibold">Occasions</h2>
+              <p className="text-sm text-muted-foreground">
+                {formData.occasionIds.length > 0
+                  ? `${formData.occasionIds.length} sélectionnée${formData.occasionIds.length > 1 ? "s" : ""}`
+                  : "Aucune occasion"}
+              </p>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            {occasions.map((occasion) => (
+              <label
+                key={occasion.id}
+                htmlFor={`occasion-${occasion.id}`}
+                className="flex cursor-pointer items-center gap-3 rounded-lg border bg-muted/30 p-3 transition-colors hover:bg-muted/50"
+              >
+                <Checkbox
+                  id={`occasion-${occasion.id}`}
+                  checked={formData.occasionIds.includes(occasion.id)}
+                  onCheckedChange={() => toggleOccasion(occasion.id)}
+                />
+                <span className="flex-1 text-sm font-medium">
+                  {occasion.name}
+                </span>
+              </label>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Actions */}
+      <div className="sticky bottom-0 flex items-center justify-between gap-4 rounded-xl border bg-card p-6 shadow-lg">
         <Button
           type="button"
-          variant="outline"
+          variant="ghost"
           onClick={() => router.back()}
           disabled={loading}
         >
           Annuler
+        </Button>
+        <Button
+          type="submit"
+          disabled={loading || uploading}
+          size="lg"
+          className="min-w-[200px]"
+        >
+          {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+          {product?.id ? "Mettre à jour le produit" : "Créer le produit"}
         </Button>
       </div>
     </form>
