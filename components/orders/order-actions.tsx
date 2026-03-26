@@ -28,7 +28,6 @@ import { HugeiconsIcon } from "@hugeicons/react"
 import {
   MoreHorizontalIcon,
   EyeIcon,
-  Edit02Icon,
   Delete02Icon,
   CheckmarkCircle02Icon,
 } from "@hugeicons/core-free-icons"
@@ -105,14 +104,14 @@ export function OrderActions({
             <HugeiconsIcon icon={EyeIcon} />
             <span>Voir les détails</span>
           </DropdownMenuItem>
-          <DropdownMenuItem onSelect={() => setShowStatusDialog(true)}>
+          <DropdownMenuItem onClick={() => setShowStatusDialog(true)}>
             <HugeiconsIcon icon={CheckmarkCircle02Icon} />
             <span>Changer le statut</span>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem
             variant="destructive"
-            onSelect={() => setShowDeleteDialog(true)}
+            onClick={() => setShowDeleteDialog(true)}
           >
             <HugeiconsIcon icon={Delete02Icon} />
             <span>Supprimer</span>
@@ -131,7 +130,9 @@ export function OrderActions({
           <div className="flex flex-col gap-4">
             <Select
               value={newStatus}
-              onValueChange={(value) => setNewStatus(value || currentStatus)}
+              onValueChange={(value) => {
+                if (value) setNewStatus(value)
+              }}
             >
               <SelectTrigger>
                 <SelectValue />
