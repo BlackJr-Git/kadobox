@@ -13,25 +13,6 @@ type Props = {
   params: Promise<{ shareId: string }>
 }
 
-type SerializedWishlistItem = {
-  id: string
-  wishlistId: string
-  productId: string
-  createdAt: string
-  product: {
-    id: string
-    name: string
-    slug: string
-    price: string
-    images: Array<{
-      id: string
-      url: string
-      alt?: string
-      sortOrder: number
-    }>
-  }
-}
-
 export default async function SharedWishlistPage({ params }: Props) {
   const { shareId } = await params
 
@@ -102,7 +83,7 @@ export default async function SharedWishlistPage({ params }: Props) {
         </div>
       ) : (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {items.map((item: SerializedWishlistItem) => (
+          {items.map((item) => (
             <div
               key={item.id}
               className="group overflow-hidden rounded-lg border bg-card transition-shadow hover:shadow-lg"
