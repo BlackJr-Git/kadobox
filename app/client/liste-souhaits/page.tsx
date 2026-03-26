@@ -12,6 +12,7 @@ import {
   Delete02Icon,
   ShoppingCart01Icon,
   Copy01Icon,
+  FavouriteIcon,
 } from "@hugeicons/core-free-icons"
 import { Loader2 } from "lucide-react"
 import {

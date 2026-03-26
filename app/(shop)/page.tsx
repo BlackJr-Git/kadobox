@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     siteName: "Cadeau Chrono",
     images: [
       {
-        url: "/og-image.png",
+        url: "https://kadobox.vercel.app/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Cadeau Chrono - Cadeaux pour toutes les occasions",
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     title: "Cadeau Chrono - Trouvez le cadeau parfait pour chaque occasion",
     description:
       "Découvrez des cadeaux uniques et personnalisés pour toutes les occasions. Livraison rapide à Kinshasa et partout en RDC.",
-    images: ["/og-image.jpg"],
+    images: ["https://kadobox.vercel.app/og-image.jpg"],
   },
 }
 

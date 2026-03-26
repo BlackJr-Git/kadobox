@@ -3,7 +3,7 @@ import { SiteNav } from "@/components/layout/site-nav"
 import { SiteFooter } from "@/components/layout/site-footer"
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://kadobox.com"),
+  metadataBase: new URL("https://kadobox.vercel.app/og-image.jpg"),
   title: {
     default: "KadoBox - Cadeaux pour toutes les occasions en RDC",
     template: "%s | KadoBox",
@@ -25,14 +25,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "fr_CD",
-    url: "https://kadobox.com",
+    url: "https://kadobox.vercel.app/og-image.jpg",
     siteName: "KadoBox",
     title: "KadoBox - Cadeaux pour toutes les occasions en RDC",
     description:
       "La boutique en ligne de référence pour vos cadeaux en RDC. Trouvez le cadeau parfait pour chaque occasion avec livraison rapide à Kinshasa.",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "https://kadobox.vercel.app/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "KadoBox - Votre boutique de cadeaux en ligne",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     description:
       "La boutique en ligne de référence pour vos cadeaux en RDC. Trouvez le cadeau parfait pour chaque occasion avec livraison rapide à Kinshasa.",
     creator: "@kadobox",
-    images: ["/og-image.jpg"],
+    images: ["https://kadobox.vercel.app/og-image.jpg"],
   },
   robots: {
     index: true,
