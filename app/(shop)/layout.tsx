@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "fr_CD",
     url: "https://kadobox.vercel.app/og-image.jpg",
-    siteName: "KadoBox",
+    siteName: "Cadeau ",
     title: "KadoBox - Cadeaux pour toutes les occasions en RDC",
     description:
       "La boutique en ligne de référence pour vos cadeaux en RDC. Trouvez le cadeau parfait pour chaque occasion avec livraison rapide à Kinshasa.",
