@@ -15,11 +15,11 @@ export default function Logo({ className, imageClassName }: LogoProps) {
       <Image
         src="/logo.png"
         alt="Cadeau Chrono"
-        width={48}
-        height={48}
+        width={32}
+        height={32}
         className={imageClassName}
       />
-      <p className="ml-2 flex flex-col items-center leading-none">
+      <p className="ml-2 flex text-lg flex-col items-center leading-none">
         <span>Cadeau</span>
         <span className="text-primary">Chrono</span>
       </p>
