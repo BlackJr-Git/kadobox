@@ -24,20 +24,24 @@ export function AddToCartButton({
 }: Props) {
   const addItem = useCartStore((s) => s.addItem)
 
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    addItem({
+      productId,
+      name,
+      price,
+      image,
+      slug,
+    })
+  }
+
   return (
     <Button
       size="lg"
       className="w-full gap-2"
       disabled={disabled}
-      onClick={() =>
-        addItem({
-          productId,
-          name,
-          price,
-          image,
-          slug,
-        })
-      }
+      onClick={handleClick}
     >
       <HugeiconsIcon
         icon={ShoppingBag02Icon}

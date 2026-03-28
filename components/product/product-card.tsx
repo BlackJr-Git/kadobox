@@ -2,6 +2,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
 import { AddToWishlistButton } from "@/app/(shop)/produit/[slug]/add-to-wishlist-button"
+import { AddToCartButton } from "@/app/(shop)/produit/[slug]/add-to-cart-button"
 
 type ProductCardProps = {
   id: string
@@ -61,6 +62,15 @@ export function ProductCard({
         )}
         <div className="absolute top-2 right-2">
           <AddToWishlistButton productId={id} />
+        </div>
+        <div className="absolute right-0 bottom-0 left-0 translate-y-full p-3 transition-transform group-hover:translate-y-0">
+          <AddToCartButton
+            productId={id}
+            name={name}
+            price={Number(price)}
+            image={image || null}
+            slug={slug}
+          />
         </div>
       </div>
       <div className="flex flex-1 flex-col gap-1 p-3">
