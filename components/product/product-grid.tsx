@@ -10,7 +10,13 @@ type Product = {
   images: { id: string; url: string; alt: string | null; sortOrder: number }[]
 }
 
-export function ProductGrid({ products }: { products: Product[] }) {
+export function ProductGrid({
+  products,
+  maxColumns = 3,
+}: {
+  products: Product[]
+  maxColumns?: 2 | 3 | 4 | 5
+}) {
   if (products.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-16 text-center">
@@ -23,8 +29,25 @@ export function ProductGrid({ products }: { products: Product[] }) {
     )
   }
 
+  const getGridClasses = () => {
+    const baseClasses = "grid grid-cols-2 gap-3 sm:gap-4"
+
+    switch (maxColumns) {
+      case 2:
+        return `${baseClasses} md:grid-cols-2 lg:grid-cols-2`
+      case 3:
+        return `${baseClasses} md:grid-cols-3 lg:grid-cols-3`
+      case 4:
+        return `${baseClasses} md:grid-cols-3 lg:grid-cols-4`
+      case 5:
+        return `${baseClasses} md:grid-cols-4 lg:grid-cols-5`
+      default:
+        return `${baseClasses} md:grid-cols-3 lg:grid-cols-3`
+    }
+  }
+
   return (
-    <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-3">
+    <div className={getGridClasses()}>
       {products.map((product) => {
         const mainImage = product.images?.sort(
           (a, b) => a.sortOrder - b.sortOrder

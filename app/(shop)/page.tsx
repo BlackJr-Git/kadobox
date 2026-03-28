@@ -277,7 +277,7 @@ export default async function HomePage() {
                 </p>
               </div>
             </div>
-            <ProductGrid products={featured} />
+            <ProductGrid products={featured} maxColumns={5} />
           </div>
         </section>
       )}
@@ -351,7 +351,7 @@ export default async function HomePage() {
               </p>
             </div>
           </div>
-          <ProductGrid products={latest} />
+          <ProductGrid products={latest} maxColumns={5} />
         </section>
       )}
 
