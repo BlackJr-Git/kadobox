@@ -30,7 +30,7 @@ export function ProductGrid({
   }
 
   const getGridClasses = () => {
-    const baseClasses = "grid grid-cols-2 gap-3 sm:gap-4"
+    const baseClasses = "grid grid-cols-2 gap-3 sm:gap-4 auto-rows-max"
 
     switch (maxColumns) {
       case 2:

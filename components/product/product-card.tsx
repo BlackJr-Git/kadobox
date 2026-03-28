@@ -1,6 +1,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
+import { AddToWishlistButton } from "@/app/(shop)/produit/[slug]/add-to-wishlist-button"
 
 type ProductCardProps = {
   id: string
@@ -14,6 +15,7 @@ type ProductCardProps = {
 }
 
 export function ProductCard({
+  id,
   name,
   slug,
   price,
@@ -33,7 +35,7 @@ export function ProductCard({
   return (
     <Link
       href={`/produit/${slug}`}
-      className="group relative flex flex-col overflow-hidden rounded-xl border bg-card transition-all hover:shadow-lg"
+      className="group relative flex h-full flex-col overflow-hidden rounded-xl border bg-card transition-all hover:shadow-lg"
     >
       <div className="relative aspect-square overflow-hidden bg-muted">
         {image ? (
@@ -50,16 +52,19 @@ export function ProductCard({
           </div>
         )}
         {hasDiscount && (
-          <Badge className="absolute left-2 top-2 bg-destructive text-destructive-foreground">
+          <Badge className="text-destructive-foreground absolute top-2 left-2 bg-destructive">
             -{discountPercent}%
           </Badge>
         )}
         {isFeatured && !hasDiscount && (
-          <Badge className="absolute left-2 top-2">Populaire</Badge>
+          <Badge className="absolute top-2 left-2">Populaire</Badge>
         )}
+        <div className="absolute top-2 right-2">
+          <AddToWishlistButton productId={id} />
+        </div>
       </div>
       <div className="flex flex-1 flex-col gap-1 p-3">
-        <h3 className="line-clamp-2 text-sm font-medium leading-snug">
+        <h3 className="line-clamp-2 text-sm leading-snug font-medium">
           {name}
         </h3>
         <div className="mt-auto flex items-center gap-2 pt-1">

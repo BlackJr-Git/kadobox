@@ -54,7 +54,7 @@ export default async function ProduitsPage({ searchParams }: Props) {
         <Suspense>
           <ProductFilters occasions={occasions} categories={categories} />
         </Suspense>
-        <ProductGrid products={products} />
+        <ProductGrid products={products} maxColumns={4} />
       </div>
     </div>
   )

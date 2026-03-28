@@ -12,7 +12,9 @@ export function AddToWishlistButton({ productId }: { productId: string }) {
   const router = useRouter()
   const pathname = usePathname()
 
-  const handleToggle = async () => {
+  const handleToggle = async (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
     setLoading(true)
     try {
       const method = added ? "DELETE" : "POST"
