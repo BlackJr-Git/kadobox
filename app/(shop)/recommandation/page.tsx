@@ -2,16 +2,21 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ProductCard } from "@/components/product/product-card"
 
 type Step = "who" | "budget" | "occasion" | "results"
 
 const WHO_OPTIONS = [
-  { value: "homme", label: "Pour lui", emoji: "👨" },
-  { value: "femme", label: "Pour elle", emoji: "👩" },
-  { value: "enfant", label: "Pour un enfant", emoji: "👶" },
-  { value: "unisexe", label: "Je ne sais pas", emoji: "🤷" },
+  { value: "homme", label: "Pour lui", image: "/men_illustration.png" },
+  { value: "femme", label: "Pour elle", image: "/women_illustration.png" },
+  { value: "enfant", label: "Pour un enfant", image: "/kids_illustration.png" },
+  {
+    value: "unisexe",
+    label: "Je ne sais pas",
+    image: "/everyone_illustration.png",
+  },
 ]
 
 const BUDGET_OPTIONS = [
@@ -22,13 +27,29 @@ const BUDGET_OPTIONS = [
 ]
 
 const OCCASION_OPTIONS = [
-  { value: "anniversaire", label: "Anniversaire", emoji: "🎂" },
-  { value: "mariage", label: "Mariage", emoji: "💒" },
-  { value: "noel", label: "Noël", emoji: "🎄" },
-  { value: "saint-valentin", label: "Saint-Valentin", emoji: "💝" },
-  { value: "fete-des-meres", label: "Fête des mères", emoji: "🌸" },
-  { value: "fete-des-peres", label: "Fête des pères", emoji: "👔" },
-  { value: "autre", label: "Autre", emoji: "🎁" },
+  {
+    value: "anniversaire",
+    label: "Anniversaire",
+    image: "/birthday_illustration.png",
+  },
+  { value: "mariage", label: "Mariage", image: "/wedding_illustration.png" },
+  { value: "noel", label: "Noël", image: "/christmas_illustration.png" },
+  {
+    value: "saint-valentin",
+    label: "Saint-Valentin",
+    image: "/valentine_illustration.png",
+  },
+  {
+    value: "fete-des-meres",
+    label: "Fête des mères",
+    image: "/mothers_illustrations.png",
+  },
+  {
+    value: "fete-des-peres",
+    label: "Fête des pères",
+    image: "/dad_illustration.png",
+  },
+  { value: "autre", label: "Autre", image: "/gift_illustration.png" },
 ]
 
 type Product = {
@@ -83,7 +104,7 @@ export default function RecommandationPage() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-10">
+    <div className="mx-auto max-w-3xl px-4 py-10">
       {step !== "results" && (
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold">Trouve le cadeau parfait</h1>
@@ -111,7 +132,7 @@ export default function RecommandationPage() {
           <h2 className="text-center text-xl font-bold">
             Pour qui cherches-tu un cadeau ?
           </h2>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {WHO_OPTIONS.map((opt) => (
               <button
                 key={opt.value}
@@ -119,10 +140,22 @@ export default function RecommandationPage() {
                   setWho(opt.value)
                   setStep("budget")
                 }}
-                className="flex flex-col items-center gap-2 rounded-xl border-2 border-transparent bg-muted/30 p-6 transition-all hover:border-primary hover:bg-primary/5"
+                className="group relative overflow-hidden rounded-xl border-2 border-transparent bg-muted/30 p-6 transition-all hover:border-primary hover:bg-primary/5 sm:p-6"
               >
-                <span className="text-4xl">{opt.emoji}</span>
-                <span className="font-medium">{opt.label}</span>
+                <div className="relative z-10 text-left">
+                  <span className="text-base font-semibold group-hover:text-primary sm:text-lg">
+                    {opt.label}
+                  </span>
+                </div>
+                <div className="absolute -right-2 -bottom-2 transition-transform group-hover:scale-110">
+                  <Image
+                    src={opt.image}
+                    alt={opt.label}
+                    width={120}
+                    height={120}
+                    className="object-contain sm:h-24 sm:w-24"
+                  />
+                </div>
               </button>
             ))}
           </div>
@@ -164,15 +197,27 @@ export default function RecommandationPage() {
           <h2 className="text-center text-xl font-bold">
             Quelle est l&apos;occasion ?
           </h2>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {OCCASION_OPTIONS.map((opt) => (
               <button
                 key={opt.value}
                 onClick={() => handleFinish(opt.value)}
-                className="flex flex-col items-center gap-1 rounded-xl border-2 border-transparent bg-muted/30 p-4 transition-all hover:border-primary hover:bg-primary/5"
+                className="group relative overflow-hidden rounded-xl border-2 border-transparent bg-muted/30 p-6 transition-all hover:border-primary hover:bg-primary/5 sm:p-6"
               >
-                <span className="text-2xl">{opt.emoji}</span>
-                <span className="text-sm font-medium">{opt.label}</span>
+                <div className="relative z-10 text-left">
+                  <span className="text-base font-semibold group-hover:text-primary sm:text-lg">
+                    {opt.label}
+                  </span>
+                </div>
+                <div className="absolute -right-2 -bottom-2 transition-transform group-hover:scale-110">
+                  <Image
+                    src={opt.image}
+                    alt={opt.label}
+                    width={100}
+                    height={100}
+                    className="object-contain sm:h-20 sm:w-20"
+                  />
+                </div>
               </button>
             ))}
           </div>
