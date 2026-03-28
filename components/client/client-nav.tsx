@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { authClient } from "@/lib/auth-client"
 import { useRouter } from "next/navigation"
+import Logo  from "@/components/logo"
 
 interface ClientNavProps {
   user: {
@@ -70,9 +71,7 @@ export function ClientNav({ user }: ClientNavProps) {
       <aside className="hidden w-64 shrink-0 border-r bg-card md:flex md:flex-col">
         <div className="border-b p-6">
           <Link href="/" className="block">
-            <h2 className="text-xl font-bold tracking-tight">
-              <span className="text-primary">KDOB</span>OX
-            </h2>
+            <Logo />
             <p className="mt-1 text-xs text-muted-foreground">Espace client</p>
           </Link>
         </div>
