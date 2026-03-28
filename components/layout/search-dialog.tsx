@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react"
 import Link from "next/link"
 import Image from "next/image"
+import { createPortal } from "react-dom"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { SearchIcon, Cancel01Icon } from "@hugeicons/core-free-icons"
 
@@ -21,6 +22,11 @@ export function SearchDialog() {
   const [loading, setLoading] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const debounceRef = useRef<NodeJS.Timeout>(undefined)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -85,8 +91,8 @@ export function SearchDialog() {
     )
   }
 
-  return (
-    <div className="fixed inset-0 z-100">
+  const dialogContent = (
+    <div className="fixed inset-0 z-9999">
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/50 backdrop-blur-sm"
@@ -95,7 +101,10 @@ export function SearchDialog() {
 
       {/* Dialog */}
       <div className="relative mx-auto mt-[15vh] w-full max-w-lg px-4">
-        <div className="overflow-hidden rounded-xl border bg-background shadow-2xl">
+        <div
+          className="overflow-hidden rounded-xl border bg-background shadow-2xl"
+          onClick={(e) => e.stopPropagation()}
+        >
           {/* Search input */}
           <div className="flex items-center border-b px-4">
             <HugeiconsIcon
@@ -193,4 +202,6 @@ export function SearchDialog() {
       </div>
     </div>
   )
+
+  return mounted ? createPortal(dialogContent, document.body) : null
 }
