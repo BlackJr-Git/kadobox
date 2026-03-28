@@ -139,10 +139,16 @@ export function OrderDetailClientView({ orderId }: OrderDetailClientViewProps) {
                           </p>
                           <p className="text-sm text-muted-foreground">
                             {item.giftCustomization.message && (
-                              <span>Message: {item.giftCustomization.message}</span>
+                              <span>
+                                Message: {item.giftCustomization.message}
+                              </span>
                             )}
-                            {item.giftCustomization.packaging && (
-                              <span> • Emballage: {item.giftCustomization.packaging}</span>
+                            {item.giftCustomization.wrappingType && (
+                              <span>
+                                {" "}
+                                • Emballage:{" "}
+                                {item.giftCustomization.wrappingType}
+                              </span>
                             )}
                           </p>
                         </div>
@@ -165,18 +171,21 @@ export function OrderDetailClientView({ orderId }: OrderDetailClientViewProps) {
                   className="mt-1 size-4 text-muted-foreground"
                 />
                 <div>
-                  <p className="font-medium">{orderData.shippingAddress.name}</p>
-                  <p className="text-sm text-muted-foreground">
-                    {orderData.shippingAddress.address}
+                  <p className="font-medium">
+                    {orderData.shippingAddress?.fullName}
                   </p>
                   <p className="text-sm text-muted-foreground">
-                    {orderData.shippingAddress.city}, {orderData.shippingAddress.postalCode}
+                    {orderData.shippingAddress?.addressLine1}
                   </p>
                   <p className="text-sm text-muted-foreground">
-                    {orderData.shippingAddress.country}
+                    {orderData.shippingAddress?.city}
+                    {orderData.shippingAddress?.province &&
+                      `, ${orderData.shippingAddress.province}`}
+                    {orderData.shippingAddress?.country &&
+                      `, ${orderData.shippingAddress.country}`}
                   </p>
                   <p className="text-sm text-muted-foreground">
-                    {orderData.shippingAddress.phone}
+                    {orderData.shippingAddress?.phone}
                   </p>
                 </div>
               </div>
@@ -203,18 +212,10 @@ export function OrderDetailClientView({ orderId }: OrderDetailClientViewProps) {
                     {Number(orderData.shippingCost).toLocaleString("fr-CD")} CDF
                   </span>
                 </div>
-                {orderData.discount > 0 && (
-                  <div className="flex justify-between text-green-600">
-                    <span className="text-sm">Remise</span>
-                    <span className="text-sm font-medium">
-                      -{Number(orderData.discount).toLocaleString("fr-CD")} CDF
-                    </span>
-                  </div>
-                )}
                 <Separator />
                 <div className="flex justify-between">
                   <span className="font-medium">Total</span>
-                  <span className="font-bold text-lg">
+                  <span className="text-lg font-bold">
                     {Number(orderData.total).toLocaleString("fr-CD")} CDF
                   </span>
                 </div>
@@ -236,7 +237,7 @@ export function OrderDetailClientView({ orderId }: OrderDetailClientViewProps) {
                   <div>
                     <p className="text-sm font-medium">Client</p>
                     <p className="text-sm text-muted-foreground">
-                      {orderData.customerName}
+                      {orderData.user?.name}
                     </p>
                   </div>
                 </div>
@@ -262,7 +263,9 @@ export function OrderDetailClientView({ orderId }: OrderDetailClientViewProps) {
                   <div>
                     <p className="text-sm font-medium">Date</p>
                     <p className="text-sm text-muted-foreground">
-                      {new Date(orderData.createdAt).toLocaleDateString("fr-FR")}
+                      {new Date(orderData.createdAt).toLocaleDateString(
+                        "fr-FR"
+                      )}
                     </p>
                   </div>
                 </div>
