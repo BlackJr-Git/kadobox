@@ -211,6 +211,31 @@ export default async function HomePage() {
               />
             </div>
           </Link>
+
+          {/* Wishlist Card */}
+          <Link
+            href="/client/liste-souhaits"
+            className="group relative overflow-hidden rounded-2xl border bg-card p-5 transition-all hover:border-primary/50 hover:shadow-lg"
+          >
+            <p className="text-xs font-medium text-muted-foreground">
+              Partage tes envies
+            </p>
+            <p className="mt-1 text-lg font-semibold text-foreground">
+              Ma Wishlist
+            </p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Crée et partage ta liste
+            </p>
+            <div className="absolute -right-2 -bottom-2 transition-transform group-hover:scale-110">
+              <Image
+                src="/gift_illustration.png"
+                alt="Wishlist"
+                width={100}
+                height={100}
+                className="object-contain"
+              />
+            </div>
+          </Link>
         </div>
       </section>
 
